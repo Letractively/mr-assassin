@@ -17,9 +17,17 @@ public final class R {
         public static final int ic_tab_radar=0x7f020003;
         public static final int ic_tab_stats=0x7f020004;
         public static final int ic_tab_target=0x7f020005;
+        public static final int radar_disc=0x7f020006;
+    }
+    public static final class id {
+        public static final int imageView1=0x7f050002;
+        public static final int linearLayout1=0x7f050000;
+        public static final int radarview=0x7f050003;
+        public static final int textView1=0x7f050001;
     }
     public static final class layout {
         public static final int main=0x7f030000;
+        public static final int radar=0x7f030001;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
