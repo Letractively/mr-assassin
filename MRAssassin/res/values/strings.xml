@@ -3,5 +3,8 @@
 
     <string name="hello">Hello World, RadarActivity!</string>
     <string name="app_name">MRAssassin</string>
+    <string name="playerName">Player Name</string>
+    <string name="targetBounty">Target Bounty</string>
+    <string name="targetName">Target Name</string>
 
 </resources>
