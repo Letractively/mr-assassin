@@ -13,7 +13,7 @@ public class StatActivity extends Activity
 	{
 	    super.onCreate(savedInstanceState);
         TextView view = new TextView(this);
-        view.setText("This will be the Stats tab.");
+        view.setText("This will be the Stat tab.");
         setContentView(view);
 	}
 
