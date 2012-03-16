@@ -6,19 +6,27 @@
     android:orientation="vertical" >
 
     <TextView
-    	android:id="@+id/textView1"
+        android:id="@+id/textView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Radar Test"
+        android:text="@string/radarTitle"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/macText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/macText"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 	<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   		android:layout_width="match_parent"
   		android:layout_height="match_parent" >
   		
       	<ImageView
-      	    android:contentDescription="Radar Background"
+      	    android:contentDescription="@string/radarDisc"
           	android:id="@+id/imageView1"
           	android:layout_width="fill_parent"
           	android:layout_height="fill_parent"
@@ -28,6 +36,7 @@
 			android:id="@+id/radarview"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent" />
+
       </FrameLayout>
 
   </LinearLayout>

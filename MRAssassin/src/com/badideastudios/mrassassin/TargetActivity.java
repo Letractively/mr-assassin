@@ -1,13 +1,8 @@
 package com.badideastudios.mrassassin;
 
-import android.R;
-import android.R.string;
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TargetActivity extends Activity {
 

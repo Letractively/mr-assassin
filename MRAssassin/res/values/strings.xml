@@ -6,5 +6,8 @@
     <string name="playerName">Player Name</string>
     <string name="targetBounty">Target Bounty</string>
     <string name="targetName">Target Name</string>
+    <string name="macText">MAC Address</string>
+    <string name="radarTitle">Radar Test</string>
+    <string name="radarDisc">Radar Background</string>
 
 </resources>
