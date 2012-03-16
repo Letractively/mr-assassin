@@ -7,11 +7,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import android.graphics.Canvas;
+import android.view.Display;
+import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
+
 
 public class RadarView extends View
 {
 	private float direction = 0;
+	Display ourDisplay;
 	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private boolean initialPoint;
 	
@@ -30,18 +35,21 @@ public class RadarView extends View
 	public RadarView(Context context)
 	{
 			super(context);
+			ourDisplay = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 			initialize();
 	}
 	
 	public RadarView(Context context, AttributeSet attr)
 	{
 			super(context, attr);
+			ourDisplay = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 			initialize();
 	}
 	
 	public RadarView(Context context, AttributeSet attr, int style)
 	{
 		super(context, attr, style);
+		ourDisplay = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		initialize();
 	}
 	
@@ -54,10 +62,11 @@ public class RadarView extends View
 	@Override
 	protected void onDraw(Canvas canvas) 
 	{
+	    canvas.save();
+		/** Set compass dimensions*/
 		int cxCompass = getMeasuredWidth()/2;
 		int cyCompass = getMeasuredHeight()/2;
 		float radiusCompass;
-	
 		if(cxCompass > cyCompass)
 		{
 			radiusCompass = (float) (cyCompass * 0.95);
@@ -66,7 +75,17 @@ public class RadarView extends View
 		{
 			radiusCompass = (float) (cxCompass * 0.95);
 		}
-		//canvas.drawCircle(cxCompass, cyCompass, radiusCompass, paint);
+		
+		/*Rotate the compass with the screen to fix errors on landscape*/
+		switch(ourDisplay.getRotation())
+		{
+		case Surface.ROTATION_90:
+	    	canvas.rotate(270, cxCompass, cyCompass);
+		case Surface.ROTATION_180:
+	    	canvas.rotate(180, cxCompass, cyCompass);
+		case Surface.ROTATION_270:
+	    	canvas.rotate(90, cxCompass, cyCompass);
+		}
 	
 		if(!initialPoint)
 		{
@@ -75,12 +94,15 @@ public class RadarView extends View
 						    (float)(cyCompass - radiusCompass * Math.cos((double)(-direction) * 3.14/180)),
 						    paint);
 		}
+		
+	     super.onDraw(canvas);
+	     canvas.restore();
 	}
 
-	public void updateDirection(float dir)
+	public void updateDirection(float[] directionMatrix)
 	{
 		initialPoint = false;
-		direction = dir;
+		direction = directionMatrix[0];
 		invalidate();
 	}
 	
