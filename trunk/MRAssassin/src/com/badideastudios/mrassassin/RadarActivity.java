@@ -17,11 +17,11 @@ import android.hardware.SensorManager;
 
 public class RadarActivity extends Activity 
 {
+	protected AssassinApp app;
 	/** Declarations for Radar circle*/
 	private RadarView radar;
 	private boolean sensorActive;
 	private static SensorManager sensorManager;
-    private String bluetoothMAC;
     
 	private SensorEventListener RadarListener = new SensorEventListener()
     { 
@@ -38,11 +38,14 @@ public class RadarActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
+    	/** Set up our layout. */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.radar);
         radar = (RadarView)findViewById(R.id.radarview);
         
-        /** Grab Bluetooth adapter and acquire our MAC address for server use.*/
+        app = (AssassinApp) getApplication();
+        
+        /** Grab Bluetooth adapter and acquire our MAC address for server use. */
         BluetoothAdapter deviceAdapter = BluetoothAdapter.getDefaultAdapter();
         if(deviceAdapter == null)
         {
@@ -54,14 +57,14 @@ public class RadarActivity extends Activity
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
+        app.setOurMAC( deviceAdapter.getAddress() );
         TextView BMACtext = (TextView) findViewById(R.id.macText);
-        bluetoothMAC = deviceAdapter.getAddress();
-        BMACtext.setText("Our MAC: " + bluetoothMAC);
+        BMACtext.setText( "Our MAC: " + app.getOurMAC() );
 
-        sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         /** Grab GPS sensor and set it up to update automatically. */
         
         /** Grab the compass sensor and set it up to update automatically. */
+        sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> compassSensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
         if(compassSensors.size() > 0)
         {
