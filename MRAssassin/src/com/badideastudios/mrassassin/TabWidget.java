@@ -42,7 +42,7 @@ public class TabWidget extends android.app.TabActivity
 	                  .setContent(intent);
 	    tabHost.addTab(spec);
 
-	    tabHost.setCurrentTab(1);
+	    tabHost.setCurrentTab(0);
 	}
 
 }

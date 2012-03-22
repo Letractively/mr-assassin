@@ -21,6 +21,14 @@
         android:text="@string/macText"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <TextView
+        android:id="@+id/locText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/currentLocation"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 	<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   		android:layout_width="match_parent"
   		android:layout_height="match_parent" >

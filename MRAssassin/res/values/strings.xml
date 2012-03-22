@@ -9,5 +9,6 @@
     <string name="macText">MAC Address</string>
     <string name="radarTitle">Radar Test</string>
     <string name="radarDisc">Radar Background</string>
+    <string name="currentLocation">Location</string>
 
 </resources>
