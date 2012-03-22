@@ -18,12 +18,16 @@ public class AssassinApp extends Application
 	/** Target Information */
 	private String targetName;
 	private int targetBounty;
+	private Location targetLocation;
 	
 	public void onCreate() 
 	{ 
 		//DELETE THIS LATER! Initializing for test purposes
 		targetName = "Altair";
 		targetBounty = 1000;
+		targetLocation = new Location("");
+		targetLocation.setLatitude(30.62216);
+		targetLocation.setLongitude(-96.33892);
 	}
 	
 	/** Put functions here to access our variables. */
@@ -32,4 +36,13 @@ public class AssassinApp extends Application
 	
 	public String getTargetName() { return targetName; }
 	public int getTargetBounty() { return targetBounty; }
+	public Location getTargetLocation() { return targetLocation; }
+	
+	//Location helper functions
+	public String printOurLocation() 
+	{ 
+		return "Lat: " + lastBestLocation.getLatitude() + "\nLong: " + lastBestLocation.getLongitude() + "\nSpeed: " + lastBestLocation.getSpeed(); 
+	}
+	public void updateLocation(Location newLocation) { lastBestLocation = newLocation; }
+	
 }
