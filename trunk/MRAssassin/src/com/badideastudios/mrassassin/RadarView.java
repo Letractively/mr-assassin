@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import android.graphics.Canvas;
+import android.hardware.GeomagneticField;
+import android.location.Location;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
@@ -93,19 +95,22 @@ public class RadarView extends View
 		if(!initialPoint)
 		{
 			canvas.drawLine(cxCompass, cyCompass,
-						    (float)(cxCompass + radiusCompass * Math.sin((double)(-direction) * 3.14/180)),
-						    (float)(cyCompass - radiusCompass * Math.cos((double)(-direction) * 3.14/180)),
-						    paint);
+		    (float)(cxCompass + radiusCompass * Math.sin(direction)),
+		    (float)(cyCompass - radiusCompass * Math.cos(direction)),
+		    paint);
 		}
 		
 	     super.onDraw(canvas);
 	     canvas.restore();
 	}
 
-	public void updateDirection(float[] directionMatrix)
+	public void updateDirection(float[] directionMatrix, Location ourLoc, Location targetLoc, GeomagneticField geo)
 	{
 		initialPoint = false;
-		direction = directionMatrix[0];
+		float heading = directionMatrix[0];
+		float bearing = ourLoc.bearingTo(targetLoc);
+		heading += geo.getDeclination();
+		direction = (float) Math.toRadians(heading - bearing);
 		invalidate();
 	}
 	
