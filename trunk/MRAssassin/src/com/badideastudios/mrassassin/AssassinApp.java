@@ -40,8 +40,11 @@ public class AssassinApp extends Application
 		targetName = "Altair";
 		targetBounty = 1000;
 		targetLocation = new Location("");
-		targetLocation.setLatitude(30.640723);
-		targetLocation.setLongitude(-96.318018);
+		/* ARCC: Lat: 30.619425 Long: -96.338041
+		 * Complex: Lat: 30.640709 Long: -96.317943
+		 */
+		targetLocation.setLatitude(30.619425);
+		targetLocation.setLongitude(-96.338041);
 	}
 	
 	/** Put functions here to access our variables. */

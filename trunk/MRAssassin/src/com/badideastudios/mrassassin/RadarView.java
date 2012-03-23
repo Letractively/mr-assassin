@@ -3,12 +3,14 @@ package com.badideastudios.mrassassin;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 
-import android.graphics.Canvas;
 import android.hardware.GeomagneticField;
 import android.location.Location;
+
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
@@ -18,6 +20,8 @@ import android.view.WindowManager;
 public class RadarView extends View
 {
 	private float direction = 0;
+	private float distance = 1000;
+	private RectF arc;
 	Display ourDisplay;
 	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private boolean initialPoint;
@@ -25,8 +29,7 @@ public class RadarView extends View
 	//Initializer for paint drawing; needed in order to draw.
 	private void initialize()
 	{
-		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(7);
+		paint.setStrokeWidth(8);
 		paint.setColor(Color.RED);
 		paint.setTextSize(30);
 		
@@ -91,24 +94,35 @@ public class RadarView extends View
 	    	canvas.rotate(90, cxCompass, cyCompass);
 	    	break;
 		}
-	
 		if(!initialPoint)
 		{
-			canvas.drawLine(cxCompass, cyCompass,
-		    (float)(cxCompass + radiusCompass * Math.sin(direction)),
-		    (float)(cyCompass - radiusCompass * Math.cos(direction)),
-		    paint);
+			if(distance > 200)
+			{
+				paint.setStyle(Paint.Style.STROKE);
+				canvas.drawLine(cxCompass, cyCompass,
+			    (float)(cxCompass + radiusCompass * Math.sin(direction)),
+			    (float)(cyCompass - radiusCompass * Math.cos(direction)),
+			    paint);
+			}
+			else
+			{
+				paint.setStyle(Paint.Style.FILL_AND_STROKE);
+				arc = new RectF(cxCompass - radiusCompass, cyCompass - radiusCompass,
+		  						cxCompass + radiusCompass, cyCompass + radiusCompass);
+				canvas.drawArc(arc, (float)Math.toDegrees(direction) - distance/2, distance, true, paint);
+			}
 		}
 		
 	     super.onDraw(canvas);
 	     canvas.restore();
 	}
 
-	public void updateDirection(float[] directionMatrix, Location ourLoc, Location targetLoc, GeomagneticField geo)
+	public void update(float[] directionMatrix, Location ourLoc, Location targetLoc, GeomagneticField geo)
 	{
 		initialPoint = false;
 		float heading = directionMatrix[0];
 		float bearing = ourLoc.bearingTo(targetLoc);
+		distance = ourLoc.distanceTo(targetLoc);
 		heading += geo.getDeclination();
 		direction = (float) Math.toRadians(heading - bearing);
 		invalidate();

@@ -46,10 +46,12 @@ public class RadarActivity extends Activity
         	Toast.makeText(this, "No Bluetooth. Exiting.", Toast.LENGTH_LONG).show();
         	finish();
         }
-        int REQUEST_ENABLE_BT = 1;
-        if (!deviceAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        int BLUETOOTH = 1;
+        if (!deviceAdapter.isEnabled()) 
+        {
+            Intent discoveryIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoveryIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
+            startActivityForResult(discoveryIntent, BLUETOOTH);
         }
         app.setOurMAC( deviceAdapter.getAddress() );
         TextView BMACtext = (TextView) findViewById(R.id.macText);
@@ -57,7 +59,7 @@ public class RadarActivity extends Activity
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30, 30, GPSListener);
+        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15, 15, GPSListener);
         locText = (TextView) findViewById(R.id.locText);
         
         /** Grab the compass sensor and set it up to update automatically. */
@@ -134,7 +136,7 @@ public class RadarActivity extends Activity
 
     	public void onSensorChanged(SensorEvent event) 
     	{
-    		radar.updateDirection(event.values, app.getOurLocation(), app.getTargetLocation(), app.getGeoField());
+    		radar.update(event.values, app.getOurLocation(), app.getTargetLocation(), app.getGeoField());
     	}
     };
 }
