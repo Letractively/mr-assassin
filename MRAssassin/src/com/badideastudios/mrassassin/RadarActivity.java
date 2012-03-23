@@ -134,7 +134,7 @@ public class RadarActivity extends Activity
 
     	public void onSensorChanged(SensorEvent event) 
     	{
-    		radar.updateDirection(event.values);
+    		radar.updateDirection(event.values, app.getOurLocation(), app.getTargetLocation(), app.getGeoField());
     	}
     };
 }
