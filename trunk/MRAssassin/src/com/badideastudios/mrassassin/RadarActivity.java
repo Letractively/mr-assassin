@@ -3,9 +3,12 @@ package com.badideastudios.mrassassin;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.bluetooth.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.location.Location;
 import android.location.LocationListener;
@@ -47,19 +50,27 @@ public class RadarActivity extends Activity
         radar = (RadarView)findViewById(R.id.radarview);     
         BMACtext = (TextView) findViewById(R.id.macText);
         locText = (TextView) findViewById(R.id.locText);
+        
+        /** Grab Bluetooth adapter. */
+        ourAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(ourAdapter == null)
+        {
+        	Toast.makeText(this, "Game cannot work without Bluetooth. Exiting.", Toast.LENGTH_LONG).show();
+        	finish();
+        }
+        
+        /** Find out our Bluetooth MAC for the server. */
+        app.setOurMAC( ourAdapter.getAddress() );
+        BMACtext.setText( "Our MAC: " + app.getOurMAC() );
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15, 15, GPSListener);
         
-        /** Grab the compass sensor and set it up to update automatically. */
+        /** Verify we have a compass sensor. */
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> compassSensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
-        if(compassSensors.size() > 0)
-        {
-        	sensorManager.registerListener(RadarListener, compassSensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
-        }
-        else
+        if(compassSensors.size() <= 0)
         {
         	Toast.makeText(this, "No Orientation Sensor. Exiting.", Toast.LENGTH_LONG).show();
         	finish();
@@ -70,15 +81,8 @@ public class RadarActivity extends Activity
     protected void onStart()
     {
     	super.onStart();
-        /** Grab Bluetooth adapter and acquire our MAC address for server use. */
-        ourAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(ourAdapter == null)
-        {
-        	Toast.makeText(this, "Game cannot work without Bluetooth. Exiting.", Toast.LENGTH_LONG).show();
-        	finish();
-        }
-        app.setOurMAC( ourAdapter.getAddress() );
-        BMACtext.setText( "Our MAC: " + app.getOurMAC() );
+        
+        /** Set up Bluetooth for discovery mode, when needed. */
         IntentFilter blueFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(targetFinder, blueFilter);
     }
@@ -88,11 +92,26 @@ public class RadarActivity extends Activity
     {
     	super.onResume();
     	
-        /** Verify that GPS and bluetooth are available on resume. */
+        /** Verify that GPS and Bluetooth are available on resume. */
         if ( !locManager.isProviderEnabled(LocationManager.GPS_PROVIDER) )
         {
-        	Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        	startActivityForResult(gpsIntent, 100);
+        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        	builder.setMessage("This app requires GPS in order to play. Would you like to go to the settings to enable GPS?")
+        		   .setCancelable(false)
+        		   .setNegativeButton("No", new DialogInterface.OnClickListener()
+        		   {
+        			   public void onClick(DialogInterface dialog, int id) { RadarActivity.this.finish(); }
+        		   })
+        		   .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+        		   {
+        			   public void onClick(DialogInterface dialog, int id) 
+        			   { 
+        				   Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        				   startActivity(gpsIntent); 
+        			   }
+        		   });
+        	AlertDialog gpsAlert = builder.create();
+        	gpsAlert.show();
         }
         if (ourAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE)
         {
@@ -100,12 +119,17 @@ public class RadarActivity extends Activity
             discoveryIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
             startActivityForResult(discoveryIntent, BLUETOOTH);
         }
+        
+        /** Reengage our compass sensor only when this app is visible */
+        List<Sensor> compassSensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
+    	sensorManager.registerListener(RadarListener, compassSensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
     }
     
     @Override
     protected void onPause()
     {
     	super.onPause();
+	 	sensorManager.unregisterListener(RadarListener);
     }
     
     @Override
@@ -120,9 +144,9 @@ public class RadarActivity extends Activity
     {
     	super.onDestroy();
     	locManager.removeUpdates(GPSListener);
-	 	sensorManager.unregisterListener(RadarListener);
     }
     
+    /** This function handles the callback from the Bluetooth enabler given to the user on startup. */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -139,16 +163,14 @@ public class RadarActivity extends Activity
     
     public void kill(View v)
     {
-    	Toast.makeText(this, "Kill completed.", Toast.LENGTH_SHORT).show();
+    	Toast.makeText(this, "Assassination Successful.", Toast.LENGTH_SHORT).show();
     	Button killButton = (Button)findViewById(R.id.kill_button);
     	killButton.setVisibility(View.GONE);
     	
     }
     
-    public void show_button(View v)
+    public void test_button(View v)
     {
-    	//Button killButton = (Button)findViewById(R.id.kill_button);
-    	//killButton.setVisibility(0);
         ourAdapter = BluetoothAdapter.getDefaultAdapter();
     	ourAdapter.startDiscovery();
     }
