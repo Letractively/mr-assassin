@@ -20,14 +20,24 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/macText"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+	
+    <!-- This is for debugging, if necessary. -->
     <TextView
         android:id="@+id/locText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/currentLocation"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:visibility="gone" />
+    
+    <Button
+		android:text="Show"
+		android:id="@+id/show_button"
+		android:layout_width="72dp" 
+		android:layout_height="40dp"
+      	android:onClick="show_button"/>
+    
 
 	<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   		android:layout_width="match_parent"
@@ -44,7 +54,14 @@
 			android:id="@+id/radarview"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent" />
-
+      	
+      	<Button 
+      	    android:id="@+id/kill_button"
+      	    android:layout_width="fill_parent"
+      	    android:layout_height="fill_parent"
+      	    android:background="@drawable/assassinate_button_set"
+      	    android:visibility="invisible"
+      	    android:onClick="kill" />
       </FrameLayout>
 
   </LinearLayout>

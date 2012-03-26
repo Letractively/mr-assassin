@@ -96,7 +96,8 @@ public class RadarView extends View
 		}
 		if(!initialPoint)
 		{
-			if(distance > 200)
+			double sliceSize = 300*Math.exp(-distance/40);
+			if(sliceSize > 5)
 			{
 				paint.setStyle(Paint.Style.STROKE);
 				canvas.drawLine(cxCompass, cyCompass,
@@ -109,7 +110,7 @@ public class RadarView extends View
 				paint.setStyle(Paint.Style.FILL_AND_STROKE);
 				arc = new RectF(cxCompass - radiusCompass, cyCompass - radiusCompass,
 		  						cxCompass + radiusCompass, cyCompass + radiusCompass);
-				canvas.drawArc(arc, (float)Math.toDegrees(direction) - distance/2, distance, true, paint);
+				canvas.drawArc(arc, (float)(Math.toDegrees(direction) - sliceSize/2), (float)sliceSize, true, paint);
 			}
 		}
 		
@@ -124,7 +125,7 @@ public class RadarView extends View
 		float bearing = ourLoc.bearingTo(targetLoc);
 		distance = ourLoc.distanceTo(targetLoc);
 		heading += geo.getDeclination();
-		direction = (float) Math.toRadians(heading - bearing);
+		direction = (float) Math.toRadians(bearing - heading);
 		invalidate();
 	}
 	

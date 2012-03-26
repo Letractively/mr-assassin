@@ -21,6 +21,7 @@ public class AssassinApp extends Application
 	private String targetName;
 	private int targetBounty;
 	private Location targetLocation;
+	private String targetMAC;
 	
 	public void onCreate() 
 	{ 
@@ -43,8 +44,9 @@ public class AssassinApp extends Application
 		/* ARCC: Lat: 30.619425 Long: -96.338041
 		 * Complex: Lat: 30.640709 Long: -96.317943
 		 */
-		targetLocation.setLatitude(30.619425);
-		targetLocation.setLongitude(-96.338041);
+		targetLocation.setLatitude(30.640709);
+		targetLocation.setLongitude(-96.317943);
+		targetMAC = "98:4B:4A:80:F1:36";
 	}
 	
 	/** Put functions here to access our variables. */
@@ -54,6 +56,7 @@ public class AssassinApp extends Application
 	public String getTargetName() { return targetName; }
 	public int getTargetBounty() { return targetBounty; }
 	public Location getTargetLocation() { return targetLocation; }
+	public String getTargetMAC() { return targetMAC; }
 	
 	//Location helper functions
 	public GeomagneticField getGeoField() { return field; }

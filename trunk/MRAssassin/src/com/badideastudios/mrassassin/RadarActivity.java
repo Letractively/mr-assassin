@@ -4,12 +4,16 @@ import java.util.List;
 
 import android.app.Activity;
 import android.bluetooth.*;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
@@ -24,6 +28,7 @@ public class RadarActivity extends Activity
 	protected AssassinApp app;
 	/** Declarations for Radar circle*/
 	private RadarView radar;
+	private boolean blueActive;
 	private boolean sensorActive;
 	private static LocationManager locManager;
 	private static SensorManager sensorManager;
@@ -40,22 +45,24 @@ public class RadarActivity extends Activity
         radar = (RadarView)findViewById(R.id.radarview);
         
         /** Grab Bluetooth adapter and acquire our MAC address for server use. */
-        BluetoothAdapter deviceAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(deviceAdapter == null)
+        BluetoothAdapter ourAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(ourAdapter == null)
         {
         	Toast.makeText(this, "No Bluetooth. Exiting.", Toast.LENGTH_LONG).show();
         	finish();
         }
         int BLUETOOTH = 1;
-        if (!deviceAdapter.isEnabled()) 
+        if (!ourAdapter.isEnabled()) 
         {
             Intent discoveryIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
             discoveryIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
             startActivityForResult(discoveryIntent, BLUETOOTH);
         }
-        app.setOurMAC( deviceAdapter.getAddress() );
+        app.setOurMAC( ourAdapter.getAddress() );
         TextView BMACtext = (TextView) findViewById(R.id.macText);
         BMACtext.setText( "Our MAC: " + app.getOurMAC() );
+        IntentFilter blueFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(targetFinder, blueFilter);
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -86,11 +93,49 @@ public class RadarActivity extends Activity
     	{
     	 	sensorManager.unregisterListener(RadarListener);
     	}
+    	if(blueActive)
+    	{
+    		unregisterReceiver(targetFinder);
+    	}
+    }
+    
+    public void kill(View v)
+    {
+    	Toast.makeText(this, "Kill completed.", Toast.LENGTH_SHORT).show();
+    	Button killButton = (Button)findViewById(R.id.kill_button);
+    	killButton.setVisibility(View.GONE);
+    	
+    }
+    
+    public void show_button(View v)
+    {
+    	//Button killButton = (Button)findViewById(R.id.kill_button);
+    	//killButton.setVisibility(0);
+        BluetoothAdapter ourAdapter = BluetoothAdapter.getDefaultAdapter();
+    	ourAdapter.startDiscovery();
     }
     
     public void updateLocationText() { locText.setText(app.printOurLocation()); }
     
-    /*Listener Declarations*/
+    private final BroadcastReceiver targetFinder = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            //When we find a device, check if it's our target
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) 
+            {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            	//Toast.makeText(context, device.getAddress(), Toast.LENGTH_SHORT).show();
+                if( device.getAddress().equals( app.getTargetMAC() ) )
+                {
+                	//If so, show our button
+                	Button killButton = (Button)findViewById(R.id.kill_button);
+                	killButton.setVisibility(0);
+                }
+            }
+        }
+    };
+    
+    /*GPS Listener*/
     private LocationListener GPSListener = new LocationListener()
     {
     	public void onLocationChanged(Location location)
@@ -127,7 +172,8 @@ public class RadarActivity extends Activity
     		}
     	}
     };
-    
+
+    /*Orientation Listener*/
 	private SensorEventListener RadarListener = new SensorEventListener()
     { 
     	public void onAccuracyChanged(Sensor sensor, int accuracy) 
