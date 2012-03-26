@@ -1,5 +1,17 @@
 package com.badideastudios.mrassassin;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
+
 import android.app.Application;
 import android.hardware.GeomagneticField;
 import android.location.Location;
@@ -22,6 +34,9 @@ public class AssassinApp extends Application
 	private int targetBounty;
 	private Location targetLocation;
 	private String targetMAC;
+	
+	/** Connection Information */
+	
 	
 	public void onCreate() 
 	{ 
@@ -52,6 +67,7 @@ public class AssassinApp extends Application
 		targetLocation.setLatitude(30.640709);
 		targetLocation.setLongitude(-96.317943);
 		targetMAC = "98:4B:4A:80:F1:36";
+
 	}
 	
 	/** Put functions here to access our variables. */
@@ -61,7 +77,16 @@ public class AssassinApp extends Application
 	public String getOurMAC() { return ourBluetoothMAC; }
 	public void setOurMAC(String mac) { ourBluetoothMAC = mac; }
 	
-	public String getTargetName() { return targetName; }
+	public String getTargetName() {
+		//String str = DownloadText("http://mr-assassins.appspot.com");
+		//return str;
+		return targetName; 
+		}
+	public void setTargetName(String name)
+	{
+		targetName = name;
+	}
+
 	public int getTargetBounty() { return targetBounty; }
 	public Location getTargetLocation() { return targetLocation; }
 	public String getTargetMAC() { return targetMAC; }
@@ -82,5 +107,6 @@ public class AssassinApp extends Application
 		return "Lat: " + lastBestLocation.getLatitude() + "\nLong: " + lastBestLocation.getLongitude() + "\nSpeed: " + lastBestLocation.getSpeed(); 
 	}
 	public void updateLocation(Location newLocation) { lastBestLocation = newLocation; }
+
 	
 }
