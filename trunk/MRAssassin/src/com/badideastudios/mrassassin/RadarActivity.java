@@ -80,6 +80,9 @@ public class RadarActivity extends Activity
     protected void onStart()
     {
     	super.onStart();
+        /** Set up Bluetooth for discovery mode for target finding. */
+        IntentFilter blueFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(targetFinder, blueFilter);
     }
     
     @Override
@@ -115,10 +118,6 @@ public class RadarActivity extends Activity
             startActivityForResult(discoveryIntent, BLUETOOTH);
         }
         
-        /** Set up Bluetooth for discovery mode for target finding. */
-        IntentFilter blueFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(targetFinder, blueFilter);
-        
         /** Reengage our compass sensor only when this app is visible */
         List<Sensor> compassSensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
     	sensorManager.registerListener(RadarListener, compassSensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
@@ -129,13 +128,13 @@ public class RadarActivity extends Activity
     {
     	super.onPause();
 	 	sensorManager.unregisterListener(RadarListener);
-		unregisterReceiver(targetFinder);
     }
     
     @Override
     protected void onStop()
     {
     	super.onStop();
+		unregisterReceiver(targetFinder);
     }
 
     @Override
@@ -173,14 +172,15 @@ public class RadarActivity extends Activity
     	ourAdapter.startDiscovery();
     }
     
-    private final BroadcastReceiver targetFinder = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
+    private final BroadcastReceiver targetFinder = new BroadcastReceiver() 
+    {
+        public void onReceive(Context context, Intent intent) 
+        {
             String action = intent.getAction();
             //When we find a device, check if it's our target
             if (BluetoothDevice.ACTION_FOUND.equals(action)) 
             {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            	//Toast.makeText(context, device.getAddress(), Toast.LENGTH_SHORT).show();
                 if( device.getAddress().equals( app.getTargetMAC() ) )
                 {
                 	//If so, show our button
@@ -199,6 +199,10 @@ public class RadarActivity extends Activity
     	{
     		//Modify our current location if it's the best one we have.
     		app.updateLocation(location);
+    		//if( location.distanceTo( app.getTargetLocation() ) < 6 )
+    		//{
+    	    	//ourAdapter.startDiscovery();
+    		//}
     	}
     	
     	public void onProviderDisabled(String provider)
