@@ -85,19 +85,19 @@ public class RadarView extends View
 		switch(ourDisplay.getRotation())
 		{
 		case Surface.ROTATION_90:
-	    	canvas.rotate(270, cxCompass, cyCompass);
+	    	//canvas.rotate(270, cxCompass, cyCompass);
 	    	break;
 		case Surface.ROTATION_180:
-	    	canvas.rotate(180, cxCompass, cyCompass);
+	    	//canvas.rotate(180, cxCompass, cyCompass);
 	    	break;
 		case Surface.ROTATION_270:
-	    	canvas.rotate(90, cxCompass, cyCompass);
+	    	//canvas.rotate(90, cxCompass, cyCompass);
 	    	break;
 		}
 		if(!initialPoint)
 		{
 			double sliceSize = 300*Math.exp(-distance/40);
-			if(sliceSize > 5)
+			if(sliceSize < 5)
 			{
 				paint.setStyle(Paint.Style.STROKE);
 				canvas.drawLine(cxCompass, cyCompass,
@@ -110,7 +110,8 @@ public class RadarView extends View
 				paint.setStyle(Paint.Style.FILL_AND_STROKE);
 				arc = new RectF(cxCompass - radiusCompass, cyCompass - radiusCompass,
 		  						cxCompass + radiusCompass, cyCompass + radiusCompass);
-				canvas.drawArc(arc, (float)(Math.toDegrees(direction) - sliceSize/2), (float)sliceSize, true, paint);
+				/**IMPORTANT: Figure out why this is 90 degrees off! */
+				canvas.drawArc(arc, (float)Math.toDegrees(direction) - (float)sliceSize/2 - 90, (float)sliceSize, true, paint);
 			}
 		}
 		
