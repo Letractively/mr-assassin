@@ -25,7 +25,8 @@ public class AssassinApp extends Application
 	
 	public void onCreate() 
 	{ 
-		//Initializing location and field to prevent null references
+		//Initializing fields to prevent null references
+		ourBluetoothMAC = "00:00:00:00:00";
 		lastBestLocation = new Location("");
 		lastBestLocation.setLatitude(1);
 		lastBestLocation.setLongitude(1);
