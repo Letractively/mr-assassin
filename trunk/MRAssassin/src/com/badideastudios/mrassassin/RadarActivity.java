@@ -80,10 +80,6 @@ public class RadarActivity extends Activity
     protected void onStart()
     {
     	super.onStart();
-        
-        /** Set up Bluetooth for discovery mode for target finding. */
-        IntentFilter blueFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(targetFinder, blueFilter);
     }
     
     @Override
@@ -119,6 +115,10 @@ public class RadarActivity extends Activity
             startActivityForResult(discoveryIntent, BLUETOOTH);
         }
         
+        /** Set up Bluetooth for discovery mode for target finding. */
+        IntentFilter blueFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(targetFinder, blueFilter);
+        
         /** Reengage our compass sensor only when this app is visible */
         List<Sensor> compassSensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
     	sensorManager.registerListener(RadarListener, compassSensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
@@ -129,13 +129,13 @@ public class RadarActivity extends Activity
     {
     	super.onPause();
 	 	sensorManager.unregisterListener(RadarListener);
+		unregisterReceiver(targetFinder);
     }
     
     @Override
     protected void onStop()
     {
     	super.onStop();
-		unregisterReceiver(targetFinder);
     }
 
     @Override

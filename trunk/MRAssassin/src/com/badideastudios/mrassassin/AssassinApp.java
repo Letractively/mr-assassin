@@ -47,9 +47,10 @@ public class AssassinApp extends Application
 		targetLocation = new Location("");
 		/* ARCC: Lat: 30.619425 Long: -96.338041
 		 * Complex: Lat: 30.640709 Long: -96.317943
+		 * Emer Tech Court: Lat: 30.622116 Long: -96.338950
 		 */
-		targetLocation.setLatitude(30.640709);
-		targetLocation.setLongitude(-96.317943);
+		targetLocation.setLatitude(30.622116);
+		targetLocation.setLongitude(-96.338950);
 		targetMAC = "98:4B:4A:80:F1:36";
 	}
 	
