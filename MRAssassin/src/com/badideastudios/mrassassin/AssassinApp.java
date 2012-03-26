@@ -26,6 +26,9 @@ public class AssassinApp extends Application
 	public void onCreate() 
 	{ 
 		//Initializing fields to prevent null references
+		playerName = "Test Player";
+		ourBounty = 400;
+		currentMoney = 1500;
 		ourBluetoothMAC = "00:00:00:00:00";
 		lastBestLocation = new Location("");
 		lastBestLocation.setLatitude(1);
@@ -51,6 +54,9 @@ public class AssassinApp extends Application
 	}
 	
 	/** Put functions here to access our variables. */
+	public String getOurName() { return playerName; }
+	public int getOurBounty() { return ourBounty; }
+	public int getOurMoney() { return currentMoney; }
 	public String getOurMAC() { return ourBluetoothMAC; }
 	public void setOurMAC(String mac) { ourBluetoothMAC = mac; }
 	
