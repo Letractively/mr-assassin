@@ -43,7 +43,7 @@
 			android:id="@+id/show_button"
 			android:layout_width="72dp" 
 			android:layout_height="40dp"
-	      	android:onClick="show_button"/>
+	      	android:onClick="test_button"/>
     </LinearLayout>
 
 	<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
