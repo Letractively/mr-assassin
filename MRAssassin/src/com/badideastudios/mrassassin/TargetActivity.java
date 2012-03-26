@@ -22,8 +22,6 @@ public class TargetActivity extends Activity
 	    TextView currentBounty = new TextView(this);
 	    currentBounty = (TextView)findViewById(com.badideastudios.mrassassin.R.id.targetBounty);
 	    currentBounty.setText( "Target Bounty: " + app.getTargetBounty() );
-	    
-
 	}
 
 }
