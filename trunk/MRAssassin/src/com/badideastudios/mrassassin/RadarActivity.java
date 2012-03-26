@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,13 +26,14 @@ import android.hardware.SensorManager;
 
 public class RadarActivity extends Activity 
 {
+	static final int BLUETOOTH = 60;
 	protected AssassinApp app;
 	/** Declarations for Radar circle*/
 	private RadarView radar;
-	private boolean blueActive;
-	private boolean sensorActive;
+	BluetoothAdapter ourAdapter;
 	private static LocationManager locManager;
 	private static SensorManager sensorManager;
+	private TextView BMACtext;
 	private TextView locText;
 	
     @Override
@@ -42,32 +44,13 @@ public class RadarActivity extends Activity
         
     	/** Set up our layout. */
         setContentView(R.layout.radar);
-        radar = (RadarView)findViewById(R.id.radarview);
-        
-        /** Grab Bluetooth adapter and acquire our MAC address for server use. */
-        BluetoothAdapter ourAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(ourAdapter == null)
-        {
-        	Toast.makeText(this, "No Bluetooth. Exiting.", Toast.LENGTH_LONG).show();
-        	finish();
-        }
-        int BLUETOOTH = 1;
-        if (!ourAdapter.isEnabled()) 
-        {
-            Intent discoveryIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoveryIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
-            startActivityForResult(discoveryIntent, BLUETOOTH);
-        }
-        app.setOurMAC( ourAdapter.getAddress() );
-        TextView BMACtext = (TextView) findViewById(R.id.macText);
-        BMACtext.setText( "Our MAC: " + app.getOurMAC() );
-        IntentFilter blueFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(targetFinder, blueFilter);
+        radar = (RadarView)findViewById(R.id.radarview);     
+        BMACtext = (TextView) findViewById(R.id.macText);
+        locText = (TextView) findViewById(R.id.locText);
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15, 15, GPSListener);
-        locText = (TextView) findViewById(R.id.locText);
         
         /** Grab the compass sensor and set it up to update automatically. */
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -75,27 +58,82 @@ public class RadarActivity extends Activity
         if(compassSensors.size() > 0)
         {
         	sensorManager.registerListener(RadarListener, compassSensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
-        	sensorActive = true;
         }
         else
         {
         	Toast.makeText(this, "No Orientation Sensor. Exiting.", Toast.LENGTH_LONG).show();
-        	sensorActive = false;
         	finish();
         }
+    }
+    
+    @Override
+    protected void onStart()
+    {
+    	super.onStart();
+        /** Grab Bluetooth adapter and acquire our MAC address for server use. */
+        ourAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(ourAdapter == null)
+        {
+        	Toast.makeText(this, "Game cannot work without Bluetooth. Exiting.", Toast.LENGTH_LONG).show();
+        	finish();
+        }
+        app.setOurMAC( ourAdapter.getAddress() );
+        BMACtext.setText( "Our MAC: " + app.getOurMAC() );
+        IntentFilter blueFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(targetFinder, blueFilter);
+    }
+    
+    @Override
+    protected void onResume()
+    {
+    	super.onResume();
+    	
+        /** Verify that GPS and bluetooth are available on resume. */
+        if ( !locManager.isProviderEnabled(LocationManager.GPS_PROVIDER) )
+        {
+        	Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        	startActivityForResult(gpsIntent, 100);
+        }
+        if (ourAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE)
+        {
+            Intent discoveryIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoveryIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
+            startActivityForResult(discoveryIntent, BLUETOOTH);
+        }
+    }
+    
+    @Override
+    protected void onPause()
+    {
+    	super.onPause();
+    }
+    
+    @Override
+    protected void onStop()
+    {
+    	super.onStop();
+		unregisterReceiver(targetFinder);
     }
 
     @Override
     protected void onDestroy() 
     {
     	super.onDestroy();
-    	if(sensorActive)
+    	locManager.removeUpdates(GPSListener);
+	 	sensorManager.unregisterListener(RadarListener);
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+    	super.onActivityResult(requestCode, resultCode, data);
+    	if(requestCode == BLUETOOTH)
     	{
-    	 	sensorManager.unregisterListener(RadarListener);
-    	}
-    	if(blueActive)
-    	{
-    		unregisterReceiver(targetFinder);
+    		if(resultCode == RESULT_CANCELED)
+    		{
+        		Toast.makeText(this, "Unable to access Bluetooth. Exiting.", Toast.LENGTH_SHORT).show();
+    			finish();
+    		}
     	}
     }
     
@@ -111,7 +149,7 @@ public class RadarActivity extends Activity
     {
     	//Button killButton = (Button)findViewById(R.id.kill_button);
     	//killButton.setVisibility(0);
-        BluetoothAdapter ourAdapter = BluetoothAdapter.getDefaultAdapter();
+        ourAdapter = BluetoothAdapter.getDefaultAdapter();
     	ourAdapter.startDiscovery();
     }
     
@@ -130,6 +168,7 @@ public class RadarActivity extends Activity
                 	//If so, show our button
                 	Button killButton = (Button)findViewById(R.id.kill_button);
                 	killButton.setVisibility(0);
+                	ourAdapter.cancelDiscovery();
                 }
             }
         }
