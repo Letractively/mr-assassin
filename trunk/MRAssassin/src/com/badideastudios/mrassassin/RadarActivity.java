@@ -3,24 +3,25 @@ package com.badideastudios.mrassassin;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.bluetooth.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.provider.Settings;
+
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
-import android.os.Bundle;
-import android.provider.Settings;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.content.Intent;
-import android.widget.Toast;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -37,7 +38,6 @@ public class RadarActivity extends Activity
 	private static LocationManager locManager;
 	private static SensorManager sensorManager;
 	private TextView BMACtext;
-	private TextView locText;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -49,7 +49,6 @@ public class RadarActivity extends Activity
         setContentView(R.layout.radar);
         radar = (RadarView)findViewById(R.id.radarview);     
         BMACtext = (TextView) findViewById(R.id.macText);
-        locText = (TextView) findViewById(R.id.locText);
         
         /** Grab Bluetooth adapter. */
         ourAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -82,7 +81,7 @@ public class RadarActivity extends Activity
     {
     	super.onStart();
         
-        /** Set up Bluetooth for discovery mode, when needed. */
+        /** Set up Bluetooth for discovery mode for target finding. */
         IntentFilter blueFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(targetFinder, blueFilter);
     }
@@ -92,7 +91,7 @@ public class RadarActivity extends Activity
     {
     	super.onResume();
     	
-        /** Verify that GPS and Bluetooth are available on resume. */
+        /** Verify that GPS and Bluetooth are available on resume. If not, ask the user to enable. */
         if ( !locManager.isProviderEnabled(LocationManager.GPS_PROVIDER) )
         {
         	AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -175,8 +174,6 @@ public class RadarActivity extends Activity
     	ourAdapter.startDiscovery();
     }
     
-    public void updateLocationText() { locText.setText(app.printOurLocation()); }
-    
     private final BroadcastReceiver targetFinder = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -203,7 +200,6 @@ public class RadarActivity extends Activity
     	{
     		//Modify our current location if it's the best one we have.
     		app.updateLocation(location);
-    		updateLocationText();
     	}
     	
     	public void onProviderDisabled(String provider)
