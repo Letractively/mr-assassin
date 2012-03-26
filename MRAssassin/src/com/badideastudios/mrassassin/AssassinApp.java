@@ -49,8 +49,8 @@ public class AssassinApp extends Application
 		 * Complex: Lat: 30.640709 Long: -96.317943
 		 * Emer Tech Court: Lat: 30.622116 Long: -96.338950
 		 */
-		targetLocation.setLatitude(30.622116);
-		targetLocation.setLongitude(-96.338950);
+		targetLocation.setLatitude(30.640709);
+		targetLocation.setLongitude(-96.317943);
 		targetMAC = "98:4B:4A:80:F1:36";
 	}
 	

@@ -170,7 +170,6 @@ public class RadarActivity extends Activity
     
     public void test_button(View v)
     {
-        ourAdapter = BluetoothAdapter.getDefaultAdapter();
     	ourAdapter.startDiscovery();
     }
     
