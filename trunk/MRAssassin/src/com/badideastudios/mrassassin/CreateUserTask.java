@@ -11,6 +11,7 @@ import org.apache.http.protocol.HTTP;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.os.Debug;
 import android.provider.SyncStateContract.Constants;
 
 /*
@@ -20,6 +21,9 @@ import android.provider.SyncStateContract.Constants;
  */
 public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 	public WeakReference<Activity> parentActivity;
+	private String name, targetURL;
+	private int score;
+	
 	
 	public CreateUserTask(Activity activity)
 	{
@@ -33,12 +37,24 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 	}
 	@Override
 	protected Boolean doInBackground(Void... arg0) {
+
 		try
 		{
 			// Create the XML string we want to send
 			String xmlString = new String();
+			xmlString = 
+			//	"<assassins>" +
+				"<assassin>" +
+				"<score>" +
+				score +
+				"</score>" +
+				"<tag>" +
+				name +
+				"</tag>" +
+				"</assassin>";// +
+			//	"</assassins>";
 			// And create the address we want to use (for now, we'll just use one address)
-			String postURL = new String();
+			String postURL = targetURL;
 			
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(postURL);
@@ -49,6 +65,7 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 			se.setContentType("application/xml");
 			httppost.setEntity(se);
 			HttpResponse httpresponse = httpclient.execute(httppost);
+			System.out.println("HEAR YE HEAR YE, " + httpresponse.getStatusLine().getStatusCode());
 			
 			return (httpresponse.getStatusLine().getStatusCode() == 200);
 		}catch(Exception e)
@@ -58,12 +75,27 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 		}
 	}
 		
+
 	@Override
 	protected void onPostExecute(Boolean result)
 	{
-		
+		if(result)
+		{
+			System.out.println("Successful delivery");
+		}
+		else System.out.println("Shamefrul dispray");
+	}
+
+	public void SetInformation(String name, int score)
+	{
+		this.name = name;
+		this.score = score;
 	}
 	
+	public void SetAddress(String address)
+	{
+		targetURL = address;
+	}
 	
 
 }
