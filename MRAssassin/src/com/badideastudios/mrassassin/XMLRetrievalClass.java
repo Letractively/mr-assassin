@@ -20,6 +20,7 @@ import android.os.AsyncTask;
  */
 public class XMLRetrievalClass extends AsyncTask<String, Void, Boolean>{
 
+	private URL targetURL;
 	DefaultHandler handler;
 	XMLDelegate delegate;
 	
@@ -35,7 +36,7 @@ public class XMLRetrievalClass extends AsyncTask<String, Void, Boolean>{
 		URL xmlURL;
 		try
 		{
-			xmlURL = new URL("http://dev.fanjingo.com:8080/TsnService/tsn/list/twitter/names/tsn/15");//new URL(urls[0]);
+			xmlURL = targetURL;//new URL("http://dev.fanjingo.com:8080/TsnService/tsn/list/twitter/names/tsn/15");//new URL(urls[0]);
 			
 			SAXParserFactory spf = SAXParserFactory.newInstance();
 			SAXParser sp = spf.newSAXParser();
@@ -68,5 +69,10 @@ public class XMLRetrievalClass extends AsyncTask<String, Void, Boolean>{
 	protected void onPostExecute(Boolean result)
 	{
 		delegate.parseComplete(handler, result);
+	}
+	
+	public void setURL(String url) throws MalformedURLException
+	{
+		targetURL = new URL(url);
 	}
 }

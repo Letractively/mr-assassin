@@ -31,11 +31,13 @@ public class AssassinApp extends Application
 	
 	/** Target Information */
 	private String targetName;
-	private int targetBounty;
+	private int targetBounty = 3;
 	private Location targetLocation;
 	private String targetMAC;
 	
 	/** Connection Information */
+	/* Current server address */
+	// mr-assassin.appspot.com/rest/assassin
 	
 	
 	public void onCreate() 
@@ -85,6 +87,15 @@ public class AssassinApp extends Application
 	public void setTargetName(String name)
 	{
 		targetName = name;
+	}
+	public void setPlayerName(String name)
+	{
+		playerName = name;
+	}
+	public void setTargetBounty(String score)
+	{
+		
+		targetBounty = Integer.parseInt(score);//(score);
 	}
 
 	public int getTargetBounty() { return targetBounty; }
