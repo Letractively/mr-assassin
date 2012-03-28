@@ -1,6 +1,9 @@
 package com.badideastudios.mrassassin;
 
+import java.net.MalformedURLException;
 import java.util.List;
+
+import org.xml.sax.helpers.DefaultHandler;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -31,7 +34,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-public class RadarActivity extends Activity 
+public class RadarActivity extends Activity implements XMLDelegate 
 {
 	static final int BLUETOOTH = 60;
 	protected AssassinApp app;
@@ -43,11 +46,17 @@ public class RadarActivity extends Activity
 	private static SensorManager sensorManager;
 	private TextView BMACtext;
 	
+	private RadarActivity act;
+	private Activity act2;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
         app = (AssassinApp) getApplication();
+        act = this;
+        act2 = (Activity)this;
+        
         
     	/** Set up our layout. */
         setContentView(R.layout.radar);
@@ -228,6 +237,25 @@ public class RadarActivity extends Activity
     	{
     		//Modify our current location if it's the best one we have.
     		app.updateLocation(location);
+    		
+    		CreateUserTask cut = new CreateUserTask(act);
+    		MyDefaultHandler mdh = new MyDefaultHandler();
+    		XMLRetrievalClass XMLrc = new XMLRetrievalClass((XMLDelegate) act, mdh);
+    		try {
+				XMLrc.setURL("http://mr-assassin.appspot.com/rest/get/assassins");
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    		cut.SetAddress("http://mr-assassin.appspot.com/rest/update/position");
+    		cut.SetLat(location.getLatitude());
+    		cut.SetLon(location.getLongitude());
+    		cut.SetName(app.getOurName());
+    		cut.SetMAC(app.getOurMAC());
+    		
+    		XMLrc.execute();
+    		cut.execute();
     		//if( location.distanceTo( app.getTargetLocation() ) < 6 )
     		//{
     	    	//ourAdapter.startDiscovery();
@@ -274,4 +302,18 @@ public class RadarActivity extends Activity
     		radar.update(event.values, app.getOurLocation(), app.getTargetLocation(), app.getGeoField());
     	}
     };
+
+	public void parseComplete(DefaultHandler handler, Boolean result) {
+		
+		MyDefaultHandler mdh = (MyDefaultHandler)handler;
+		app.setTargetName(mdh.assassin.returnTarget());
+		app.setTargetBounty(mdh.targetAssassin.returnBounty());
+		app.setTargetMAC(mdh.targetAssassin.returnMACAddress());
+		Location targetLoc = new Location("");
+		targetLoc.setLatitude(mdh.targetAssassin.returnLat());
+		targetLoc.setLongitude(mdh.targetAssassin.returnLon());
+		app.setPlayerName(mdh.assassin.returnTag());
+		app.setTargetLocation(targetLoc);
+		
+	}
 }

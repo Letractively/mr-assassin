@@ -66,9 +66,9 @@ public class AssassinApp extends Application
 		 * Complex: Lat: 30.640709 Long: -96.317943
 		 * Emer Tech Court: Lat: 30.622116 Long: -96.338950
 		 */
-		targetLocation.setLatitude(30.640709);
-		targetLocation.setLongitude(-96.317943);
-		targetMAC = "98:4B:4A:80:F1:36";
+	//	targetLocation.setLatitude(30.640709);
+	//	targetLocation.setLongitude(-96.317943);
+	//	targetMAC = "98:4B:4A:80:F1:36";
 
 	}
 	
@@ -78,6 +78,14 @@ public class AssassinApp extends Application
 	public int getOurMoney() { return currentMoney; }
 	public String getOurMAC() { return ourBluetoothMAC; }
 	public void setOurMAC(String mac) { ourBluetoothMAC = mac; }
+	public void setTargetMAC(String mac)
+	{
+		targetMAC = mac;
+	}
+	public void setTargetLocation(Location loc)
+	{
+		targetLocation = loc;
+	}
 	
 	public String getTargetName() {
 		//String str = DownloadText("http://mr-assassins.appspot.com");

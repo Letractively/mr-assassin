@@ -1,9 +1,9 @@
 package com.badideastudios.mrassassin;
 
 public class AssassinObj {
-	private String assassinName, targetName, macAddress;
-	private double latitude, longitude;
-	private int money, bounty;
+	private String assassinName = "Undefined", targetName = "Undefined", macAddress = "Undefined";
+	private double latitude = 0.0, longitude = 0.0;
+	private int money = 0, bounty = 0;
 	
 	public AssassinObj(String assassinName, int latitude, int longitude, String targetName, String macAddress, int bounty, int money)
 	{
@@ -51,10 +51,19 @@ public class AssassinObj {
 		this.bounty = bounty;;
 	}
 	
-	
 	public String returnTag()
 	{
 		return assassinName;
+	}
+	
+	public double returnLat()
+	{
+		return latitude;
+	}
+	
+	public double returnLon()
+	{
+		return longitude;
 	}
 	
 	public String returnMACAddress()

@@ -63,6 +63,9 @@ public class TargetActivity extends Activity implements XMLDelegate
 		MyDefaultHandler mdh = (MyDefaultHandler)handler;
 		app.setTargetName(mdh.assassin.returnTarget());
 		app.setTargetBounty(mdh.targetAssassin.returnBounty());
+		app.setPlayerName(mdh.assassin.returnTag());
+
+
 	    
 	    name.setText( "Current Target: " + app.getTargetName() );
 	    currentBounty.setText("Target Bounty: " + app.getTargetBounty());
