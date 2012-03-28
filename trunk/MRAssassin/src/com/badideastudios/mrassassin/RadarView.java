@@ -85,13 +85,13 @@ public class RadarView extends View
 		switch(ourDisplay.getRotation())
 		{
 		case Surface.ROTATION_90:
-	    	//canvas.rotate(270, cxCompass, cyCompass);
+	    	canvas.rotate(270, cxCompass, cyCompass);
 	    	break;
 		case Surface.ROTATION_180:
-	    	//canvas.rotate(180, cxCompass, cyCompass);
+	    	canvas.rotate(180, cxCompass, cyCompass);
 	    	break;
 		case Surface.ROTATION_270:
-	    	//canvas.rotate(90, cxCompass, cyCompass);
+	    	canvas.rotate(90, cxCompass, cyCompass);
 	    	break;
 		}
 		if(!initialPoint)
