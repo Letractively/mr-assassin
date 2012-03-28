@@ -28,6 +28,13 @@
 		android:layout_height="40dp"
       	android:onClick="test_button"/>
     
+    <Button
+		android:text="@string/testing"
+		android:id="@+id/test_button2"
+		android:layout_width="72dp" 
+		android:layout_height="40dp"
+      	android:onClick="test_button2"/>
+    
 
 	<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   		android:layout_width="match_parent"

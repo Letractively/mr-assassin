@@ -3,6 +3,9 @@ package com.badideastudios.mrassassin;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -36,6 +39,7 @@ public class RadarActivity extends Activity
 	private RadarView radar;
 	BluetoothAdapter ourAdapter;
 	private static LocationManager locManager;
+	private static NotificationManager noteManager;
 	private static SensorManager sensorManager;
 	private TextView BMACtext;
 	
@@ -74,6 +78,9 @@ public class RadarActivity extends Activity
         	Toast.makeText(this, "No Orientation Sensor. Exiting.", Toast.LENGTH_LONG).show();
         	finish();
         }
+        
+        /** Acquire notification manager for notifications.*/
+        noteManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
     
     @Override
@@ -167,9 +174,31 @@ public class RadarActivity extends Activity
     	
     }
     
+    public void warn()
+    {
+    	int warnID = 1;
+    	int icon = R.drawable.dagger;
+    	CharSequence tickerText = "Danger!";
+    	long when = System.currentTimeMillis();
+    	Context context = getApplicationContext();
+    	CharSequence contentTitle = "MRAssassins";
+    	CharSequence contentText = "An assassin may be close. Be careful.";
+    	Intent notificationIntent = new Intent(this, RadarActivity.class);
+    	PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+    	
+    	Notification warningNote = new Notification(icon, tickerText, when);
+    	warningNote.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+    	noteManager.notify(warnID, warningNote);
+    }
+    
     public void test_button(View v)
     {
     	ourAdapter.startDiscovery();
+    }
+    
+    public void test_button2(View v)
+    {
+    	warn();
     }
     
     private final BroadcastReceiver targetFinder = new BroadcastReceiver() 
