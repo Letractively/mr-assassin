@@ -29,21 +29,21 @@ public class TargetActivity extends Activity implements XMLDelegate
 	    currentBounty = (TextView)findViewById(com.badideastudios.mrassassin.R.id.targetBounty);
 	    
 	    // POST
-	    CreateUserTask cut = new CreateUserTask(this);
-	    cut.SetAddress("http://mr-assassin.appspot.com/rest/assassin");
-	    cut.SetInformation("I'mmakinganotehere,hugesuccess", 100000001);
+	    //CreateUserTask cut = new CreateUserTask(this);
+	    //cut.SetAddress("http://mr-assassin.appspot.com/rest/assassin");
+	    //cut.SetInformation("I'mmakinganotehere,hugesuccess", 100000001);
 	    
 	    // GET
 		MyDefaultHandler mdh = new MyDefaultHandler();
 		XMLRetrievalClass XMLrc = new XMLRetrievalClass(this, mdh);
 		try {
-			XMLrc.setURL("http://mr-assassin.appspot.com/rest/assassin");
+			XMLrc.setURL("http://mr-assassin.appspot.com/rest/get/assassins");
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		XMLrc.execute();
-		cut.execute();
+		//cut.execute();
 
 		dialog.show();
 		/*
@@ -61,8 +61,8 @@ public class TargetActivity extends Activity implements XMLDelegate
 	public void parseComplete(DefaultHandler handler, Boolean result) {
 		dialog.hide();
 		MyDefaultHandler mdh = (MyDefaultHandler)handler;
-		app.setTargetName(mdh.targetName);
-		app.setTargetBounty(mdh.score);
+		app.setTargetName(mdh.assassin.returnTarget());
+		app.setTargetBounty(mdh.targetAssassin.returnBounty());
 	    
 	    name.setText( "Current Target: " + app.getTargetName() );
 	    currentBounty.setText("Target Bounty: " + app.getTargetBounty());

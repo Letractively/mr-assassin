@@ -92,10 +92,10 @@ public class AssassinApp extends Application
 	{
 		playerName = name;
 	}
-	public void setTargetBounty(String score)
+	public void setTargetBounty(int i)
 	{
 		
-		targetBounty = Integer.parseInt(score);//(score);
+		targetBounty = i;//(score);
 	}
 
 	public int getTargetBounty() { return targetBounty; }
