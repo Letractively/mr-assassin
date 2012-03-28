@@ -27,22 +27,25 @@ public class MyDefaultHandler extends DefaultHandler {
 		{
 			for(int i = 0; i < assassinList.size(); i++)
 			{
-				System.out.println("Currently on element: " + i);
-				if(assassinList.get(i).returnTag() != null)
-				{
-					System.out.println("Element " + i + " does not contain a null tag");
-						if(assassinList.get(i).returnTag() == "sewellka") // FOR TESTING PURPOSES, MANUALLY ENTER ID
-						{
-							System.out.println("Tag found at " + i);
-							assassin = assassinList.get(i);
-						}		
-				}else System.out.println("Null element found");
+				System.out.println("Currently on element: " + i); 
+				System.out.println("Element " + i + ": " + assassinList.get(i).returnTag());
+				System.out.println("Element " + i + " does not contain a null tag");
+				System.out.println(assassin.returnTag());
+				String userTag = assassinList.get(i).returnTag();
+				System.out.println(userTag);
+				String userName = "sewellka";
+					if(userTag.equals(userName)) // FOR TESTING PURPOSES, MANUALLY ENTER ID
+					{
+						System.out.println("Tag found at " + i);
+						assassin = assassinList.get(i);
+					}		
 			}
+			
 			for(int i = 0; i < assassinList.size(); i++)
 			{
 				if(assassinList.get(i).returnTag() != null)
 				{
-					if(assassinList.get(i).returnTag() == assassin.returnTarget())
+					if(assassinList.get(i).returnTag().equals(assassin.returnTarget()))
 					{
 						targetAssassin = assassinList.get(i);
 					}

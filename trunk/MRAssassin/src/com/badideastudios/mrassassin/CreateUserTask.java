@@ -11,8 +11,6 @@ import org.apache.http.protocol.HTTP;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.os.Debug;
-import android.provider.SyncStateContract.Constants;
 
 /*
  * CreateUserTask is used to create an asynchronous task 
@@ -21,8 +19,9 @@ import android.provider.SyncStateContract.Constants;
  */
 public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 	public WeakReference<Activity> parentActivity;
-	private String name, targetURL;
+	private String name, targetURL, mac;
 	private int score;
+	private double lat, lon;
 	
 	
 	public CreateUserTask(Activity activity)
@@ -45,12 +44,21 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 			xmlString = 
 			//	"<assassins>" +
 				"<assassin>" +
-				"<score>" +
-				score +
-				"</score>" +
+				//"<score>" +
+				//score +
+				//"</score>" +
 				"<tag>" +
 				name +
 				"</tag>" +
+				"<lat>" +
+				lat +
+				"</lat>" +
+				"<lon>" +
+				lon +
+				"</lon>" +
+				"<mac>" +
+				mac +
+				"</mac>" +
 				"</assassin>";// +
 			//	"</assassins>";
 			// And create the address we want to use (for now, we'll just use one address)
@@ -95,6 +103,26 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 	public void SetAddress(String address)
 	{
 		targetURL = address;
+	}
+	
+	public void SetMAC(String mac)
+	{
+		this.mac = mac;
+	}
+	
+	public void SetName(String tag)
+	{
+		this.name = tag;
+	}
+	
+	public void SetLat(Double lat)
+	{
+		this.lat = lat;
+	}
+	
+	public void SetLon(Double lon)
+	{
+		this.lon = lon;
 	}
 	
 
