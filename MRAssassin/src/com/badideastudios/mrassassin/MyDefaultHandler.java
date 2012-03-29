@@ -33,7 +33,7 @@ public class MyDefaultHandler extends DefaultHandler {
 				System.out.println(assassin.returnTag());
 				String userTag = assassinList.get(i).returnTag();
 				System.out.println(userTag);
-				String userName = "sewellka";
+				String userName = "howlingblue";
 					if(userTag.equals(userName)) // FOR TESTING PURPOSES, MANUALLY ENTER ID
 					{
 						System.out.println("Tag found at " + i);
