@@ -13,6 +13,9 @@ import android.bluetooth.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -208,6 +211,32 @@ public class RadarActivity extends Activity implements XMLDelegate
     public void test_button2(View v)
     {
     	warn();
+    }
+    
+    /** Handle the menu button press and present options */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+    	MenuInflater inflater = getMenuInflater();
+    	inflater.inflate(R.menu.options_menu, menu);
+    	return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+    	switch( item.getItemId() )
+    	{
+    	case R.id.settings:
+    		return true;
+    	case R.id.help:
+    		return true;
+    	case R.id.exit:
+    		finish();
+    		return true;
+    	default:
+    		return super.onOptionsItemSelected(item);
+    	}
     }
     
     private final BroadcastReceiver targetFinder = new BroadcastReceiver() 
