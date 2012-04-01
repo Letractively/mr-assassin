@@ -3,17 +3,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+
     <FrameLayout
-        android:id="@+id/frameLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:id="@+id/stat_top_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp" >
+        
+		<View
+		    android:id="@+id/stat_background_rectangle"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/radar_rect" >
+
+		</View>
+		
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:gravity="center_horizontal">
+
+            <ImageButton
+                android:id="@+id/category_right_arrow"
+                android:contentDescription="@string/left_arrow_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:background="@null"
+                android:src="@drawable/ic_left_arrow" />
+
+            <TextView
+                android:id="@+id/category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/stat_category"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FF000000" />
+
+            <ImageButton
+                android:id="@+id/category_left_arrow"
+                android:contentDescription="@string/right_arrow_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:background="@null"
+                android:src="@drawable/ic_right_arrow" />
+
+        </LinearLayout>
          
     </FrameLayout>
     
     <ListView 
        android:id="@+id/ListViewId"
-       android:layout_width="fill_parent"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"/>
 
 </LinearLayout>
