@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:title="@string/category_player">
-        <Preference android:summary="@string/playerName" android:title="@string/title_user" android:selectable="false"/>
+    <PreferenceCategory android:title="Player Information" android:key="PlayerCategory">
+        <Preference android:summary="Player" android:title="User Name" android:selectable="false" android:key="UserPref"/>
+        <Preference android:summary="If this isn't you, press here to log out." android:title="Log Out" android:key="LogoutPref" android:selectable="true"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/category_about"></PreferenceCategory>
+    <PreferenceCategory android:key="GameCategory" android:title="Game Information">
+        <Preference android:title="Server Name" android:key="ServerPref" android:summary="Server" android:selectable="false"/>
+        <Preference android:summary="Click here to join a different game." android:title="Change Server" android:key="ChangeServerPref" android:selectable="true"/>
+    </PreferenceCategory><PreferenceCategory android:title="About Application" android:key="AboutCategory">
+        <Preference android:summary="Click to learn about the wondrous people who made this game." android:title="About Us" android:key="AboutUsPref" android:selectable="true"/>
+        <Preference android:summary="0.0 r0" android:title="Application Version" android:key="VersionPref" android:selectable="false"/>
+    </PreferenceCategory>
+    
     
 
 </PreferenceScreen>
