@@ -16,7 +16,8 @@ public class AssassinObj {
 		this.money = money;
 	}
 	
-	public AssassinObj() {
+	public AssassinObj() 
+	{
 		// TODO Auto-generated constructor stub
 	}
 
@@ -29,6 +30,7 @@ public class AssassinObj {
 	{
 		this.targetName = targetName;
 	}
+	
 	public void setLat(double latitude)
 	{
 		this.latitude = latitude;
@@ -38,14 +40,17 @@ public class AssassinObj {
 	{
 		this.longitude = longitude;
 	}
+	
 	public void setMAC(String macAddress)
 	{
 		this.macAddress = macAddress;
 	}
+	
 	public void setMoney(int money)
 	{
 		this.money = money;
 	}
+	
 	public void setBounty(int bounty)
 	{
 		this.bounty = bounty;;
@@ -69,6 +74,11 @@ public class AssassinObj {
 	public String returnMACAddress()
 	{
 		return macAddress;
+	}
+	
+	public int getMoney()
+	{
+		return money;
 	}
 	
 	public String returnTarget()
