@@ -8,8 +8,5 @@
     <string name="radarTitle">Radar Test</string>
     <string name="radarDisc">Radar Background</string>
     <string name="testing">Test</string>
-    <string name="category_player">Player</string>
-    <string name="title_user">User Name</string>
-    <string name="category_about">About Us</string>
 
 </resources>

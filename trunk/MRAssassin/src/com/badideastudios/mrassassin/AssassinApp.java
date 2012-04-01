@@ -35,13 +35,15 @@ public class AssassinApp extends Application
 	private Location targetLocation;
 	private String targetMAC;
 	
-	/** Connection Information */
+	/** Misc Information */
+	private String version;
 	/* Current server address */
 	// mr-assassin.appspot.com/rest/assassin
 	
 	
 	public void onCreate() 
 	{ 
+		version = "1.0 r31";
 		//Initializing fields to prevent null references
 		playerName = "Test Player";
 		ourBounty = 400;
@@ -69,7 +71,6 @@ public class AssassinApp extends Application
 	//	targetLocation.setLatitude(30.640709);
 	//	targetLocation.setLongitude(-96.317943);
 	//	targetMAC = "98:4B:4A:80:F1:36";
-
 	}
 	
 	/** Put functions here to access our variables. */
@@ -77,6 +78,7 @@ public class AssassinApp extends Application
 	public int getOurBounty() { return ourBounty; }
 	public int getOurMoney() { return currentMoney; }
 	public String getOurMAC() { return ourBluetoothMAC; }
+	public String getVersion() { return version; }
 	public void setOurMAC(String mac) { ourBluetoothMAC = mac; }
 	public void setTargetMAC(String mac)
 	{
