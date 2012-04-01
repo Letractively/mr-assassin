@@ -8,5 +8,6 @@
     <string name="radarTitle">Radar Test</string>
     <string name="radarDisc">Radar Background</string>
     <string name="testing">Test</string>
+    <string name="title_credits">Credits</string>
 
 </resources>

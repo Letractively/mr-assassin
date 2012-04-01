@@ -1,5 +1,6 @@
 package com.badideastudios.mrassassin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -57,8 +58,8 @@ public class SettingsActivity extends PreferenceActivity
         {
                 public boolean onPreferenceClick(Preference preference) 
                 {
-                        Toast.makeText(getBaseContext(), "It's us!", Toast.LENGTH_LONG).show();
-                        //Display activity that gives credits.
+                		Intent creditsActivity = new Intent(getBaseContext(), CreditsActivity.class);
+                		startActivity(creditsActivity);
                         return true;
                 }
 
