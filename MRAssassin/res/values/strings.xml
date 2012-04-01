@@ -4,10 +4,20 @@
     <string name="playerName">Player Name</string>
     <string name="targetBounty">Target Bounty</string>
     <string name="targetName">Target Name</string>
-    <string name="macText">MAC Address</string>
-    <string name="radarTitle">Radar Test</string>
+    <string name="status_text_1">GPS Status</string>
+    <string name="radar_title">Current Status:</string>
     <string name="radarDisc">Radar Background</string>
     <string name="testing">Test</string>
     <string name="title_credits">Credits</string>
+    <string name="title_login">MRAssassins Login</string>
+    <string name="player_divider">Player Info:</string><string name="username_text">Username:</string>
+    <string name="password_text">Password:</string>
+    <string name="server_divider">Server Info:</string><string name="server_text">Server Web Address:</string>
+    
+    <string name="login_button_text">Log In!</string>
+    <string name="stat_category">Stat Category</string>
+    <string name="left_arrow_content">Left Arrow</string>
+    <string name="right_arrow_content">Right Arrow</string>
+    
 
 </resources>

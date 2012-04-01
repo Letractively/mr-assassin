@@ -47,10 +47,9 @@ public class RadarActivity extends Activity implements XMLDelegate
 	private static LocationManager locManager;
 	private static NotificationManager noteManager;
 	private static SensorManager sensorManager;
-	private TextView BMACtext;
+	private TextView GPStext;
 	
 	private RadarActivity act;
-	private Activity act2;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -58,13 +57,10 @@ public class RadarActivity extends Activity implements XMLDelegate
         super.onCreate(savedInstanceState);
         app = (AssassinApp) getApplication();
         act = this;
-        act2 = (Activity)this;
-        
         
     	/** Set up our layout. */
         setContentView(R.layout.radar);
-        radar = (RadarView)findViewById(R.id.radarview);     
-        BMACtext = (TextView) findViewById(R.id.macText);
+        radar = (RadarView)findViewById(R.id.radarview);
         
         /** Grab Bluetooth adapter. */
         ourAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -76,7 +72,6 @@ public class RadarActivity extends Activity implements XMLDelegate
         
         /** Find out our Bluetooth MAC for the server. */
         app.setOurMAC( ourAdapter.getAddress() );
-        BMACtext.setText( "Our MAC: " + app.getOurMAC() );
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -203,6 +198,12 @@ public class RadarActivity extends Activity implements XMLDelegate
     	noteManager.notify(warnID, warningNote);
     }
     
+    public void setGPSText(String text) 
+    {
+        GPStext = (TextView) findViewById(R.id.status_text_1);
+        GPStext.setText(text);
+    }
+    
     public void test_button(View v)
     {
     	ourAdapter.startDiscovery();
@@ -278,6 +279,11 @@ public class RadarActivity extends Activity implements XMLDelegate
     			app.updateLocation(location);
     		}
     		
+    		if( location.distanceTo( app.getTargetLocation() ) < 6 )
+    		{
+    	    	ourAdapter.startDiscovery();
+    		}
+    		
     		CreateUserTask cut = new CreateUserTask(act);
     		MyDefaultHandler mdh = new MyDefaultHandler();
     		XMLRetrievalClass XMLrc = new XMLRetrievalClass((XMLDelegate) act, mdh);
@@ -296,10 +302,6 @@ public class RadarActivity extends Activity implements XMLDelegate
     		
     		XMLrc.execute();
     		cut.execute();
-    		//if( location.distanceTo( app.getTargetLocation() ) < 6 )
-    		//{
-    	    	//ourAdapter.startDiscovery();
-    		//}
     	}
     	
     	public void onProviderDisabled(String provider)
@@ -318,13 +320,13 @@ public class RadarActivity extends Activity implements XMLDelegate
     		switch (status) 
     		{
     		case LocationProvider.OUT_OF_SERVICE:
-    			//We need to notify the server that we are out
+    			act.setGPSText("Unable to lock location.");
     			break;
     		case LocationProvider.TEMPORARILY_UNAVAILABLE:
     			//This means we're taking a break, since we haven't met time or distance inaccuracy level to update.
     			break;
     		case LocationProvider.AVAILABLE:
-    			//We can reestablish the bonus counter.
+    			act.setGPSText("GPS location locked.");
     			break;
     		}
     	}
