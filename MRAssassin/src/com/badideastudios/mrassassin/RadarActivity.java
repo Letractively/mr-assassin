@@ -222,12 +222,15 @@ public class RadarActivity extends Activity implements XMLDelegate
     	return true;
     }
     
+    /** Handle callback when a menu option is selected */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
     	switch( item.getItemId() )
     	{
     	case R.id.settings:
+    		Intent settingsActivity = new Intent(getBaseContext(), SettingsActivity.class);
+    		startActivity(settingsActivity);
     		return true;
     	case R.id.help:
     		return true;

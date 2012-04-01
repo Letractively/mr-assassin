@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/settings" android:title="Settings"></item>
-    <item android:id="@+id/help" android:title="Help"></item>
-    <item android:id="@+id/exit" android:title="Exit"></item>
+    <item android:id="@+id/settings" android:title="Settings" android:icon="@drawable/ic_settings"></item>
+    <item android:id="@+id/help" android:title="Help" android:icon="@drawable/ic_help"></item>
+    <item android:id="@+id/exit" android:title="Exit" android:icon="@drawable/ic_exit"></item>
     
 
 </menu>

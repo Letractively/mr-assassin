@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello">Hello World, RadarActivity!</string>
     <string name="app_name">MRAssassin</string>
     <string name="playerName">Player Name</string>
     <string name="targetBounty">Target Bounty</string>
@@ -10,5 +8,8 @@
     <string name="radarTitle">Radar Test</string>
     <string name="radarDisc">Radar Background</string>
     <string name="testing">Test</string>
+    <string name="category_player">Player</string>
+    <string name="title_user">User Name</string>
+    <string name="category_about">About Us</string>
 
 </resources>
