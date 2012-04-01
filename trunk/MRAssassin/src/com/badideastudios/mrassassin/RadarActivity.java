@@ -267,8 +267,16 @@ public class RadarActivity extends Activity implements XMLDelegate
     {
     	public void onLocationChanged(Location location)
     	{
-    		//Modify our current location if it's the best one we have.
-    		app.updateLocation(location);
+    		/**If our new location information has accuracy info available and 
+    		 * has more accuracy than our old location, then update location.
+    		 * Also update location if the distance from our new fix to the old is further than 10m.
+    		 */
+    		Location oldLoc = app.getOurLocation();
+    		if( (location.getAccuracy() < oldLoc.getAccuracy() && location.getAccuracy() != 0.0) ||
+    			location.distanceTo(oldLoc) > 10)
+    		{
+    			app.updateLocation(location);
+    		}
     		
     		CreateUserTask cut = new CreateUserTask(act);
     		MyDefaultHandler mdh = new MyDefaultHandler();
