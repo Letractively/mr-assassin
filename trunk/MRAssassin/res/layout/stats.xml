@@ -2,61 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+    android:orientation="vertical" >
     <FrameLayout
         android:id="@+id/stat_top_frame"
         android:layout_width="wrap_content"
         android:layout_height="36dp" >
-        
+        
 		<View
 		    android:id="@+id/stat_background_rectangle"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:background="@drawable/radar_rect" >
+		</View>
+		<RelativeLayout
+		    android:id="@+id/relativeLayout1"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent" >
 
-		</View>
-		
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:gravity="center_horizontal">
+		    <ImageButton
+		        android:id="@+id/category_left_arrow"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="@null"
+		        android:contentDescription="@string/left_arrow_content"
+        		android:layout_alignParentLeft="true"
+		        android:onClick="left_button"
+		        android:src="@drawable/ic_left_arrow" />
 
-            <ImageButton
-                android:id="@+id/category_right_arrow"
-                android:contentDescription="@string/left_arrow_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:background="@null"
-                android:src="@drawable/ic_left_arrow" />
+		    <TextView
+		        android:id="@+id/category_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:gravity="center"
+		        android:layout_centerHorizontal="true"
+		        android:text="@string/stat_category"
+		        android:textAppearance="?android:attr/textAppearanceLarge"
+		        android:textColor="#FF000000" />
 
-            <TextView
-                android:id="@+id/category_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/stat_category"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#FF000000" />
-
-            <ImageButton
-                android:id="@+id/category_left_arrow"
-                android:contentDescription="@string/right_arrow_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:background="@null"
-                android:src="@drawable/ic_right_arrow" />
-
-        </LinearLayout>
+		    <ImageButton
+		        android:id="@+id/category_right_arrow"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="@null"
+		        android:contentDescription="@string/right_arrow_content"
+        		android:layout_alignParentRight="true"
+		        android:onClick="right_button"
+		        android:src="@drawable/ic_right_arrow" />
+		</RelativeLayout>
          
     </FrameLayout>
     
     <ListView 
-       android:id="@+id/ListViewId"
+       android:id="@+id/stat_list_view"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"/>
+       android:layout_height="0dip"
+       android:layout_weight="1.0"/>
+    
+    <TextView 
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stats_waiting" />
 
 </LinearLayout>
