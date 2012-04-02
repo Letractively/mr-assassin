@@ -18,6 +18,7 @@
     <string name="stat_category">Stat Category</string>
     <string name="left_arrow_content">Left Arrow</string>
     <string name="right_arrow_content">Right Arrow</string>
+    <string name="stats_waiting">Populating Statistics...</string>
     
 
 </resources>
