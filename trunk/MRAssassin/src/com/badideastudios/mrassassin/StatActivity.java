@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 public class StatActivity extends Activity 
 {
-	private enum categories { TOP_KILLERS, TOP_MONEY, TOP_BOUNTY };
+	private enum Category { TOP_KILLERS, TOP_MONEY, TOP_BOUNTY };
 	private TextView categoryText;
-	private int currentCategory;
+	private Category currentCategory;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -17,8 +17,9 @@ public class StatActivity extends Activity
 	    super.onCreate(savedInstanceState);
         setContentView(R.layout.stats);
 
+        currentCategory = Category.TOP_KILLERS;
         categoryText = (TextView) findViewById(R.id.category_text);
-        currentCategory = 0;
+        categoryText.setText( currentCategory.name() );
 	}
 	
 	/** Handle left and right button presses*/
@@ -30,10 +31,5 @@ public class StatActivity extends Activity
     public void right_button(View v)
     {
     	
-    }
-
-    public String print_category()
-    {
-    	return "";
     }
 }
