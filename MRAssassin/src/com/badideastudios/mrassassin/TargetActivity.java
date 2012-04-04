@@ -35,13 +35,17 @@ public class TargetActivity extends Activity implements XMLDelegate
 	    currentMoney =  (TextView)findViewById(com.badideastudios.mrassassin.R.id.targetMoney);
 	    
 	    // POST
-	    //CreateUserTask cut = new CreateUserTask(this);
-	    //cut.SetAddress("http://mr-assassin.appspot.com/rest/assassin");
-	    //cut.SetInformation("I'mmakinganotehere,hugesuccess", 100000001);
+	    CreateUserTask cut = new CreateUserTask(this);
+//	    cut.SetAddress("http://mr-assassin.appspot.com/rest/assassin");
+	    cut.SetContent("5");
+	    cut.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
+	    cut.SetContentType("text/plain");
+	    //cut.SetInformation("sewellka");
 	    
 	    // GET
 		MyDefaultHandler mdh = new MyDefaultHandler();
 		XMLRetrievalClass XMLrc = new XMLRetrievalClass(this, mdh);
+		
 		try {
 			XMLrc.setURL("http://mr-assassin.appspot.com/rest/get/assassins");
 		} catch (MalformedURLException e) {
@@ -49,7 +53,7 @@ public class TargetActivity extends Activity implements XMLDelegate
 			e.printStackTrace();
 		}
 		XMLrc.execute();
-		//cut.execute();
+		cut.execute();
 
 		dialog.show();
 		/*
@@ -67,14 +71,15 @@ public class TargetActivity extends Activity implements XMLDelegate
 	public void parseComplete(DefaultHandler handler, Boolean result) {
 		dialog.hide();
 		MyDefaultHandler mdh = (MyDefaultHandler)handler;
+		app.setTarget(mdh.targetAssassin);
+		app.setPlayer(mdh.assassin);
+/*
 		app.setTargetName(mdh.assassin.returnTarget());
 		app.setTargetBounty(mdh.targetAssassin.returnBounty());
 		app.setPlayerName(mdh.assassin.returnTag());
-
-
-	    
-	    name.setText( "Current Target: " + app.getTargetName() );
-	    currentBounty.setText("Target Bounty: " + app.getTargetBounty());
+*/	    
+	    name.setText("Current Target: " + app.getTarget().returnTag());//getTargetName() );
+	    currentBounty.setText("Target Bounty: " + app.getTarget().returnBounty());//getTargetBounty());
 	    //name.setTag("Target Bounty: " + app.getTargetBounty());
 	    
 		// TODO Auto-generated method stub	

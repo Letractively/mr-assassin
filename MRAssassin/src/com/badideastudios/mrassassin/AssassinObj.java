@@ -1,10 +1,12 @@
 package com.badideastudios.mrassassin;
 
-public class AssassinObj 
-{
-	private String assassinName = "Undefined", targetName = "Undefined", macAddress = "Undefined";
+import android.location.Location;
+
+public class AssassinObj {
+	private String assassinName = "Undefined", targetName = "Undefined", macAddress = "00:00:00:00:00";
 	private double latitude = 0.0, longitude = 0.0;
-	private int bounty = 0, kills = 0, money = 0;
+	private Location loc = new Location("");
+	private int money = 0, bounty = 0, kills = 0;
 	
 	public AssassinObj()
 	{
@@ -40,14 +42,27 @@ public class AssassinObj
 		this.targetName = targetName;
 	}
 	
+	public void setLoc(double lat, double lon)
+	{
+		loc = new Location("");
+		loc.setLatitude(latitude);
+		loc.setLongitude(longitude);
+	}
+	
+	public void setLoc(Location loc)
+	{
+		this.loc = loc;
+	}
 	public void setLat(double latitude)
 	{
 		this.latitude = latitude;
+		loc.setLatitude(latitude);
 	}
 	
 	public void setLon(double longitude)
 	{
 		this.longitude = longitude;
+		loc.setLongitude(longitude);
 	}
 	
 	public void setMAC(String macAddress)
@@ -73,6 +88,11 @@ public class AssassinObj
 	public String returnTag()
 	{
 		return assassinName;
+	}
+	
+	public Location returnLoc()
+	{
+		return loc;
 	}
 	
 	public double returnLat()
