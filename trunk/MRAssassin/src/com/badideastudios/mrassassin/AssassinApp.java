@@ -20,6 +20,7 @@ import android.location.Location;
 public class AssassinApp extends Application
 {
 	/** Player Information */
+	private AssassinObj target, player;
 	private String playerName;
 	private int ourBounty;
 	private int currentMoney;
@@ -45,6 +46,8 @@ public class AssassinApp extends Application
 	{ 
 		version = "1.0 r36";
 		//Initializing fields to prevent null references
+		player = new AssassinObj();
+		target = new AssassinObj();
 		playerName = "Test Player";
 		ourBounty = 400;
 		currentMoney = 1500;
@@ -73,45 +76,44 @@ public class AssassinApp extends Application
 	//	targetMAC = "98:4B:4A:80:F1:36";
 	}
 	
-	/** Put functions here to access our variables. */
-	public String getOurName() { return playerName; }
-	public int getOurBounty() { return ourBounty; }
-	public int getOurMoney() { return currentMoney; }
-	public String getOurMAC() { return ourBluetoothMAC; }
+	// Variable functions
 	public String getVersion() { return version; }
-	public void setOurMAC(String mac) { ourBluetoothMAC = mac; }
-	public void setTargetMAC(String mac)
+	public String getOurName() { return player.returnTag(); }
+	// Information functions
+	public void setTarget(AssassinObj target)
 	{
-		targetMAC = mac;
-	}
-	public void setTargetLocation(Location loc)
-	{
-		targetLocation = loc;
+		this.target = target;
 	}
 	
-	public String getTargetName() {
-		//String str = DownloadText("http://mr-assassins.appspot.com");
-		//return str;
-		return targetName; 
-		}
-	public void setTargetName(String name)
+	public void setPlayer(AssassinObj player)
 	{
-		targetName = name;
+		this.player = player;
 	}
-	public void setPlayerName(String name)
+	
+	public AssassinObj getPlayer()
 	{
-		playerName = name;
+		return player;
 	}
-	public void setTargetBounty(int i)
+	
+	public AssassinObj getTarget()
 	{
-		
-		targetBounty = i;//(score);
+		return target;
+	}
+	
+	public void setOurMAC(String mac)
+	{
+		ourBluetoothMAC = mac;
+	}
+	
+	public Location getPlayerLocation()
+	{
+		return player.returnLoc();
 	}
 
-	public int getTargetBounty() { return targetBounty; }
-	public Location getTargetLocation() { return targetLocation; }
-	public String getTargetMAC() { return targetMAC; }
-	
+	public Location getTargetLocation()
+	{
+		return target.returnLoc();
+	}
 	//Location helper functions
 	public GeomagneticField getGeoField() { return field; }
 	public void setGeoField(Location location)
@@ -122,12 +124,10 @@ public class AssassinApp extends Application
 				Double.valueOf(location.getAltitude()).floatValue(),
 				System.currentTimeMillis());
 	}
-	public Location getOurLocation() { return lastBestLocation; }
+	public Location getOurLocation() { return player.returnLoc(); }
 	public String printOurLocation() 
 	{ 
 		return "Lat: " + lastBestLocation.getLatitude() + "\nLong: " + lastBestLocation.getLongitude() + "\nSpeed: " + lastBestLocation.getSpeed(); 
 	}
-	public void updateLocation(Location newLocation) { lastBestLocation = newLocation; }
-
-	
+	public void updateLocation(Location newLocation) { player.setLoc(newLocation); }
 }

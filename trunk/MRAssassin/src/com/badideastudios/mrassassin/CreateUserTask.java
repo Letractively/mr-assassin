@@ -2,12 +2,14 @@ package com.badideastudios.mrassassin;
 
 import java.lang.ref.WeakReference;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -22,6 +24,8 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 	private String name, targetURL, mac;
 	private int score;
 	private double lat, lon;
+	
+	private String contentType, content, response;
 	
 	
 	public CreateUserTask(Activity activity)
@@ -41,7 +45,8 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 		{
 			// Create the XML string we want to send
 			String xmlString = new String();
-			xmlString = 
+		/*	xmlString = 
+					
 			//	"<assassins>" +
 				"<assassin>" +
 				//"<score>" +
@@ -61,18 +66,32 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 				"</mac>" +
 				"</assassin>";// +
 			//	"</assassins>";
+			
+		*/	
 			// And create the address we want to use (for now, we'll just use one address)
+			String content = this.content;
+			String contentType = this.contentType;
 			String postURL = targetURL;
 			
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(postURL);
+		
 			
 			// Create a string entity of our XML string
-			StringEntity se = new StringEntity(xmlString, HTTP.UTF_8);
+			StringEntity se = new StringEntity(content, HTTP.UTF_8);
+			//StringEntity se = new StringEntity(xmlString, HTTP.UTF_8);
 			// Set ContentType to "application/xml" so the server will accept it
-			se.setContentType("application/xml");
+			se.setContentType(contentType);//"application/xml");
+			//se.setContentType("application/xml");
+			//se.setContentType("")
+			//se.set
 			httppost.setEntity(se);
 			HttpResponse httpresponse = httpclient.execute(httppost);
+			String strResponse = EntityUtils.toString(httpresponse.getEntity());
+			if(strResponse != null)
+				System.out.println(strResponse);
+			HttpEntity he = httpresponse.getEntity();
+			//System.out.println()
 			System.out.println("HEAR YE HEAR YE, " + httpresponse.getStatusLine().getStatusCode());
 			
 			return (httpresponse.getStatusLine().getStatusCode() == 200);
@@ -123,6 +142,21 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 	public void SetLon(Double lon)
 	{
 		this.lon = lon;
+	}
+	
+	public void SetContent(String content)
+	{
+		this.content = content;
+	}
+	
+	public void SetContentType(String contentType)
+	{
+		this.contentType = contentType;
+	}
+	
+	public String GetOutput()
+	{
+		return response;
 	}
 	
 

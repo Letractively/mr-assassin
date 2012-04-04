@@ -72,6 +72,8 @@ public class RadarActivity extends Activity implements XMLDelegate
         
         /** Find out our Bluetooth MAC for the server. */
         app.setOurMAC( ourAdapter.getAddress() );
+        app.getPlayer().setMAC( ourAdapter.getAddress() );
+       // BMACtext.setText( "Our MAC: " + app.getPlayer().returnMACAddress());//getOurMAC() );
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -249,7 +251,7 @@ public class RadarActivity extends Activity implements XMLDelegate
             if (BluetoothDevice.ACTION_FOUND.equals(action)) 
             {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if( device.getAddress().equals( app.getTargetMAC() ) )
+                if( device.getAddress().equals( app.getTarget().returnMACAddress()))//getTargetMAC() ) )
                 {
                 	//If so, show our button
                 	Button killButton = (Button)findViewById(R.id.kill_button);
@@ -292,10 +294,25 @@ public class RadarActivity extends Activity implements XMLDelegate
 			}
     		
     		cut.SetAddress("http://mr-assassin.appspot.com/rest/update/position");
+    		cut.SetContentType("application/xml");
+    		cut.SetContent("<assassin>" +
+					"<tag>" +
+					app.getPlayer().returnTag() +
+					"</tag>" +
+					"<lat>" +
+					app.getPlayer().returnLoc().getLatitude() +
+					"</lat>" +
+					"<lon>" +
+					app.getPlayer().returnLoc().getLongitude() +
+					"</lon>" +
+					"<mac>" +
+					app.getPlayer().returnMACAddress() +
+					"</mac>" +
+					"</assassin>");
     		cut.SetLat(location.getLatitude());
     		cut.SetLon(location.getLongitude());
-    		cut.SetName(app.getOurName());
-    		cut.SetMAC(app.getOurMAC());
+    		cut.SetName(app.getPlayer().returnTag());//appgetOurName());
+    		cut.SetMAC(app.getPlayer().returnMACAddress());//app.getOurMAC());
     		
     		XMLrc.execute();
     		cut.execute();
@@ -324,14 +341,16 @@ public class RadarActivity extends Activity implements XMLDelegate
 
     	public void onSensorChanged(SensorEvent event) 
     	{
-    		radar.update(event.values, app.getOurLocation(), app.getTargetLocation(), app.getGeoField());
+    		radar.update(event.values, app.getOurLocation(), app.getTarget().returnLoc(), app.getGeoField());
     	}
     };
 
 	public void parseComplete(DefaultHandler handler, Boolean result) {
 		
 		MyDefaultHandler mdh = (MyDefaultHandler)handler;
-		app.setTargetName(mdh.assassin.returnTarget());
+		app.setTarget(mdh.targetAssassin);
+		app.setPlayer(mdh.assassin);
+	/*	app.setTargetName(mdh.assassin.returnTarget());
 		app.setTargetBounty(mdh.targetAssassin.returnBounty());
 		app.setTargetMAC(mdh.targetAssassin.returnMACAddress());
 		Location targetLoc = new Location("");
@@ -339,6 +358,6 @@ public class RadarActivity extends Activity implements XMLDelegate
 		targetLoc.setLongitude(mdh.targetAssassin.returnLon());
 		app.setPlayerName(mdh.assassin.returnTag());
 		app.setTargetLocation(targetLoc);
-		
+	*/	
 	}
 }
