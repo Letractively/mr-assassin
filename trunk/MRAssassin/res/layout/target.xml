@@ -8,9 +8,8 @@
     <FrameLayout
         android:id="@+id/target_top_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.0" >
-
+        android:layout_height="fill_parent"
+        android:layout_weight="0.66" >
         <View
             android:id="@+id/target_background_rectangle"
             android:layout_width="wrap_content"
@@ -75,8 +74,8 @@
     <FrameLayout
         android:id="@+id/target_bottom_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.0" >
+        android:layout_height="fill_parent"
+        android:layout_weight="0.33" >
     </FrameLayout>
     
 </LinearLayout>

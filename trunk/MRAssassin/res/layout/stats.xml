@@ -6,7 +6,8 @@
     <FrameLayout
         android:id="@+id/stat_top_frame"
         android:layout_width="wrap_content"
-        android:layout_height="36dp" >
+        android:layout_height="fill_parent"
+        android:layout_weight="0.9" >
         
 		<View
 		    android:id="@+id/stat_background_rectangle"
@@ -61,7 +62,7 @@
     <ListView 
        android:id="@+id/stat_list_view"
        android:layout_width="match_parent"
-       android:layout_height="0dip"
-       android:layout_weight="1.0"/>
+       android:layout_height="fill_parent"
+       android:layout_weight="0.1"/>
 
 </LinearLayout>
