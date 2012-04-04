@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">MRAssassin</string>
     <string name="playerName">Player Name</string>
-    <string name="targetBounty">Target Bounty</string>
-    <string name="targetName">Target Name</string>
+    <string name="target_title">Target Dossier:</string><string name="target_name">Target Name</string><string name="target_kills">Target Kills</string><string name="target_bounty">Target Bounty</string><string name="target_money">Target Money</string>
+    
     <string name="status_text_1">GPS Status</string>
     <string name="radar_title">Current Status:</string>
     <string name="radarDisc">Radar Background</string>
@@ -21,6 +21,9 @@
     <string name="stats_waiting">Populating Statistics. . . . .</string>
     <string name="list_default_title">Assassin Name</string>
     <string name="list_default_summary">Assassin Info</string>
+    
+    
+    
     
 
 </resources>
