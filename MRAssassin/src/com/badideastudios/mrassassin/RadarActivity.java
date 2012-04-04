@@ -278,7 +278,7 @@ public class RadarActivity extends Activity implements XMLDelegate
     			app.updateLocation(location);
     		}
     		
-    		if( location.distanceTo( app.getTargetLocation() ) < 6 )
+    		if( location.distanceTo( app.getTargetLocation() ) < 10 )
     		{
     	    	ourAdapter.startDiscovery();
     		}
