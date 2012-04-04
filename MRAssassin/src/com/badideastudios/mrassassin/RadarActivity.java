@@ -30,7 +30,6 @@ import android.provider.Settings;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -61,6 +60,7 @@ public class RadarActivity extends Activity implements XMLDelegate
     	/** Set up our layout. */
         setContentView(R.layout.radar);
         radar = (RadarView)findViewById(R.id.radarview);
+        GPStext = (TextView) findViewById(R.id.status_text_1);
         
         /** Grab Bluetooth adapter. */
         ourAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -198,11 +198,8 @@ public class RadarActivity extends Activity implements XMLDelegate
     	noteManager.notify(warnID, warningNote);
     }
     
-    public void setGPSText(String text) 
-    {
-        GPStext = (TextView) findViewById(R.id.status_text_1);
-        GPStext.setText(text);
-    }
+    public void setGPSText(String text)    { GPStext.setText(text); }
+    public void setGPSTextColor(int color) { GPStext.setTextColor(color); }
     
     public void test_button(View v)
     {
@@ -315,21 +312,7 @@ public class RadarActivity extends Activity implements XMLDelegate
     	}
     	
     	public void onStatusChanged(String provider, int status, Bundle stuff)
-    	{
-    		/* This is called when the GPS status alters */
-    		switch (status) 
-    		{
-    		case LocationProvider.OUT_OF_SERVICE:
-    			act.setGPSText("Unable to lock location.");
-    			break;
-    		case LocationProvider.TEMPORARILY_UNAVAILABLE:
-    			//This means we're taking a break, since we haven't met time or distance inaccuracy level to update.
-    			break;
-    		case LocationProvider.AVAILABLE:
-    			act.setGPSText("GPS location locked.");
-    			break;
-    		}
-    	}
+    	{ /** This function apparently does absolutely nothing in the current API. */ }
     };
 
     /*Orientation Listener*/
