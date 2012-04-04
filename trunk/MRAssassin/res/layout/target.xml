@@ -1,23 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:baselineAligned="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/targetName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/targetName"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/targetBounty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/targetBounty"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <FrameLayout
+        android:id="@+id/target_top_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0" >
+
+        <View
+            android:id="@+id/target_background_rectangle"
+            android:layout_width="wrap_content"
+            android:layout_height="226dp"
+            android:background="@drawable/radar_rect" />
+
+        <LinearLayout
+            android:id="@+id/target_top_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/targetTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/target_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FF000000" />
+
+            <TextView
+                android:id="@+id/targetName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/target_name"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FF000000" />
+
+            <TextView
+                android:id="@+id/targetKills"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/target_kills"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FF000000" />
+
+            <TextView
+                android:id="@+id/targetBounty"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/target_bounty"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FF000000" />
+
+            <TextView
+                android:id="@+id/targetMoney"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/target_money"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FF000000" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/target_bottom_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0" >
+    </FrameLayout>
+    
 </LinearLayout>

@@ -17,7 +17,7 @@ public class TargetActivity extends Activity implements XMLDelegate
 {
 	protected AssassinApp app;
 	
-	TextView name, currentBounty;
+	TextView name, currentKills, currentBounty, currentMoney;
 	ProgressDialog dialog;
 	/** Called when the activity is first created. */
 	@Override
@@ -30,7 +30,9 @@ public class TargetActivity extends Activity implements XMLDelegate
 	    dialog = new ProgressDialog(this);
 	    
 	    name = (TextView)findViewById(com.badideastudios.mrassassin.R.id.targetName);
+	    currentKills =  (TextView)findViewById(com.badideastudios.mrassassin.R.id.targetKills);
 	    currentBounty = (TextView)findViewById(com.badideastudios.mrassassin.R.id.targetBounty);
+	    currentMoney =  (TextView)findViewById(com.badideastudios.mrassassin.R.id.targetMoney);
 	    
 	    // POST
 	    //CreateUserTask cut = new CreateUserTask(this);
