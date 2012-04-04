@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="Bad Idea Studios" android:key="BadIdeaCategory">
+        <Preference android:key="Author1" android:title="Vincent Kocks" android:summary="Android Interface Programmer" android:selectable="false"/>
+        <Preference android:key="Author2" android:title="Matthew Leary" android:summary="Server Communication Programmer"/>
+        <Preference android:key="Author3" android:title="Andrew Mauney" android:summary="Game Server Programmer"/>
+        <Preference android:key="Author4" android:title="Kedric Sewell" android:summary="Device Communication Programmer"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Icon Assistance" android:key="IconHelpCategory">
+        <Preference android:key="IconHelp1" android:title="IconShock" android:summary="http://www.iconshock.com/android-icons/"/>
+        <Preference android:key="IconHelp2" android:title="Martina Šmejkalová" android:summary="http://www.sireasgallery.com/"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Special Thanks" android:key="SpecialThanksCategory">
+        <Preference android:key="Professor" android:title="Zachary Toups" android:summary="Project Overseer"/>
+    </PreferenceCategory>
+    
+
+</PreferenceScreen>
