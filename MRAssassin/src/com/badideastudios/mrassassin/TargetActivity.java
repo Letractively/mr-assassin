@@ -6,7 +6,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class TargetActivity extends Activity implements XMLDelegate
@@ -78,4 +82,33 @@ public class TargetActivity extends Activity implements XMLDelegate
 	{
 		return app;
 	}
+    
+    /** Handle the menu button press and present options */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+    	MenuInflater inflater = getMenuInflater();
+    	inflater.inflate(R.menu.options_menu, menu);
+    	return true;
+    }
+    
+    /** Handle callback when a menu option is selected */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+    	switch( item.getItemId() )
+    	{
+    	case R.id.settings:
+    		Intent settingsActivity = new Intent(getBaseContext(), SettingsActivity.class);
+    		startActivity(settingsActivity);
+    		return true;
+    	case R.id.help:
+    		return true;
+    	case R.id.exit:
+    		finish();
+    		return true;
+    	default:
+    		return super.onOptionsItemSelected(item);
+    	}
+    }
 }

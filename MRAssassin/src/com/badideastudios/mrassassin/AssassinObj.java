@@ -1,11 +1,24 @@
 package com.badideastudios.mrassassin;
 
-public class AssassinObj {
+public class AssassinObj 
+{
 	private String assassinName = "Undefined", targetName = "Undefined", macAddress = "Undefined";
 	private double latitude = 0.0, longitude = 0.0;
-	private int money = 0, bounty = 0;
+	private int bounty = 0, kills = 0, money = 0;
 	
-	public AssassinObj(String assassinName, int latitude, int longitude, String targetName, String macAddress, int bounty, int money)
+	public AssassinObj()
+	{
+		this.assassinName = "Altair";
+		this.latitude = 1;
+		this.longitude = 1;
+		this.targetName = "Nobody";
+		this.macAddress = "00:00:00:00:00:00";
+		this.bounty = 1000;
+		this.kills = 0;
+		this.money = 0;
+	}
+	
+	public AssassinObj(String assassinName, int latitude, int longitude, String targetName, String macAddress, int bounty, int kills, int money)
 	{
 		this.assassinName = assassinName;
 		this.latitude = latitude;
@@ -13,12 +26,8 @@ public class AssassinObj {
 		this.targetName = targetName;
 		this.macAddress = macAddress;
 		this.bounty = bounty;
+		this.kills = kills;
 		this.money = money;
-	}
-	
-	public AssassinObj() 
-	{
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setTag(String assassinName)
@@ -51,9 +60,14 @@ public class AssassinObj {
 		this.money = money;
 	}
 	
+	public void setKills(int kills)
+	{
+		this.kills = kills;
+	}
+	
 	public void setBounty(int bounty)
 	{
-		this.bounty = bounty;;
+		this.bounty = bounty;
 	}
 	
 	public String returnTag()
@@ -76,9 +90,14 @@ public class AssassinObj {
 		return macAddress;
 	}
 	
-	public int getMoney()
+	public int returnMoney()
 	{
 		return money;
+	}
+	
+	public int returnKills()
+	{
+		return kills;
 	}
 	
 	public String returnTarget()

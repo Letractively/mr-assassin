@@ -52,16 +52,16 @@
          
     </FrameLayout>
     
+    <TextView
+        android:id="@+id/stat_list_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stats_waiting" />
+
     <ListView 
        android:id="@+id/stat_list_view"
        android:layout_width="match_parent"
        android:layout_height="0dip"
        android:layout_weight="1.0"/>
-    
-    <TextView 
-        android:id="@android:id/empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/stats_waiting" />
 
 </LinearLayout>

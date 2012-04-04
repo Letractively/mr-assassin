@@ -43,7 +43,7 @@ public class AssassinApp extends Application
 	
 	public void onCreate() 
 	{ 
-		version = "1.0 r31";
+		version = "1.0 r36";
 		//Initializing fields to prevent null references
 		playerName = "Test Player";
 		ourBounty = 400;

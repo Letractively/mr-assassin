@@ -18,7 +18,9 @@
     <string name="stat_category">Stat Category</string>
     <string name="left_arrow_content">Left Arrow</string>
     <string name="right_arrow_content">Right Arrow</string>
-    <string name="stats_waiting">Populating Statistics...</string>
+    <string name="stats_waiting">Populating Statistics. . . . .</string>
+    <string name="list_default_title">Assassin Name</string>
+    <string name="list_default_summary">Assassin Info</string>
     
 
 </resources>

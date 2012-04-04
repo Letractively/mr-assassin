@@ -39,19 +39,6 @@ public class SettingsActivity extends PreferenceActivity
 
         });
 		
-		/**Handle button click on "Change Server" button */
-		Preference changeServerPref = (Preference) findPreference("ChangeServerPref");
-        changeServerPref.setOnPreferenceClickListener(new OnPreferenceClickListener() 
-        {
-                public boolean onPreferenceClick(Preference preference) 
-                {
-                        Toast.makeText(getBaseContext(), "Switching Server.", Toast.LENGTH_LONG).show();
-                        //Remove all server information and go to server connection screen.
-                        return true;
-                }
-
-        });
-		
 		/**Handle button click on "About Us" button */
 		Preference aboutPref = (Preference) findPreference("AboutUsPref");
         aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() 
