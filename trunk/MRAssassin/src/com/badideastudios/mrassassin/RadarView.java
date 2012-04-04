@@ -96,7 +96,7 @@ public class RadarView extends View
 		}
 		if(!initialPoint)
 		{
-			double sliceSize = 300*Math.exp(-distance/40);
+			double sliceSize = 440*Math.exp(-distance/40);
 			if(sliceSize < 5)
 			{
 				paint.setStyle(Paint.Style.STROKE);

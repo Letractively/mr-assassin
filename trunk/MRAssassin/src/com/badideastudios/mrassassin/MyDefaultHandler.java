@@ -28,7 +28,7 @@ public class MyDefaultHandler extends DefaultHandler {
 			for(int i = 0; i < assassinList.size(); i++)
 			{
 				String userTag = assassinList.get(i).returnTag();
-				String userName = "sewellka";
+				String userName = "howlingblue";
 					if(userTag.equals(userName)) // FOR TESTING PURPOSES, MANUALLY ENTER ID
 					{
 						assassin = assassinList.get(i);
