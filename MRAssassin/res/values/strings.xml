@@ -21,6 +21,15 @@
     <string name="stats_waiting">Populating Statistics. . . . .</string>
     <string name="list_default_title">Assassin Name</string>
     <string name="list_default_summary">Assassin Info</string>
+    <string name="help_heading_1">Overview</string>
+    <string name="help_desc_1">Brief Summary</string>
+    <string name="help_heading_2">Radar</string>
+    <string name="help_desc_2">Radar Summary</string>
+    <string name="help_heading_3">Target</string>
+    <string name="help_desc_3">Target Overview</string>
+    <string name="help_heading_4">Stats</string>
+    <string name="help_desc_4">Stat Overview</string>
+    <string name="back_text">Back to previous tab</string>
     
     
     

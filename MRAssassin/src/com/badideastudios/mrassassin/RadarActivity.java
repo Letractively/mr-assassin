@@ -233,6 +233,8 @@ public class RadarActivity extends Activity implements XMLDelegate
     		startActivity(settingsActivity);
     		return true;
     	case R.id.help:
+    		Intent helpActivity = new Intent(getBaseContext(), HelpActivity.class);
+    		startActivity(helpActivity);
     		return true;
     	case R.id.exit:
     		finish();
