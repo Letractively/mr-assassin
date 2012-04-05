@@ -35,11 +35,11 @@ public class TargetActivity extends Activity implements XMLDelegate
 	    currentMoney =  (TextView)findViewById(com.badideastudios.mrassassin.R.id.targetMoney);
 	    
 	    // POST
-	    CreateUserTask cut = new CreateUserTask(this);
+	   // CreateUserTask cut = new CreateUserTask(this);
 //	    cut.SetAddress("http://mr-assassin.appspot.com/rest/assassin");
-	    cut.SetContent("5");
-	    cut.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
-	    cut.SetContentType("text/plain");
+	   // cut.SetContent("5");
+	   // cut.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
+	    //cut.SetContentType("text/plain");
 	    //cut.SetInformation("sewellka");
 	    
 	    // GET
@@ -53,7 +53,7 @@ public class TargetActivity extends Activity implements XMLDelegate
 			e.printStackTrace();
 		}
 		XMLrc.execute();
-		cut.execute();
+		//cut.execute();
 
 		dialog.show();
 		/*

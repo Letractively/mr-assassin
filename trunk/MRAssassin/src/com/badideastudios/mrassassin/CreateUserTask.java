@@ -10,6 +10,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.xml.sax.helpers.DefaultHandler;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -24,13 +25,22 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 	private String name, targetURL, mac;
 	private int score;
 	private double lat, lon;
+	XMLDelegate delegate;
+	DefaultHandler handler;
 	
 	private String contentType, content, response;
-	
 	
 	public CreateUserTask(Activity activity)
 	{
 		parentActivity = new WeakReference<Activity>(activity);
+	}
+	
+	public CreateUserTask(Activity activity, XMLDelegate delegate, DefaultHandler handler)
+	{
+		parentActivity = new WeakReference<Activity>(activity);
+		this.delegate = delegate;
+		this.handler = handler;
+		
 	}
 
 	@Override
@@ -111,6 +121,8 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 			System.out.println("Successful delivery");
 		}
 		else System.out.println("Shamefrul dispray");
+		if(delegate != null)
+			delegate.parseComplete(handler, result);
 	}
 
 	public void SetInformation(String name, int score)
