@@ -208,11 +208,6 @@ public class RadarActivity extends Activity implements XMLDelegate
     	ourAdapter.startDiscovery();
     }
     
-    public void test_button2(View v)
-    {
-    	warn();
-    }
-    
     /** Handle the menu button press and present options */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -278,11 +273,6 @@ public class RadarActivity extends Activity implements XMLDelegate
     			location.distanceTo(oldLoc) > 10)
     		{
     			app.updateLocation(location);
-    		}
-    		
-    		if( location.distanceTo( app.getTargetLocation() ) < 10 )
-    		{
-    	    	ourAdapter.startDiscovery();
     		}
     		
     		CreateUserTask cut = new CreateUserTask(act);

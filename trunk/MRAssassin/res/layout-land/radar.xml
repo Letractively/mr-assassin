@@ -41,20 +41,14 @@
                 android:gravity="center_horizontal"
                 android:text="@string/status_text_1"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-		        android:textColor="#FF000000" />
+		        android:textColor="#FF000000" 
+		        android:visibility="invisible" />
 
             <Button
                 android:id="@+id/show_button"
-                android:layout_width="72dp"
-                android:layout_height="40dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:onClick="test_button"
-                android:text="@string/testing" />
-
-            <Button
-                android:id="@+id/test_button2"
-                android:layout_width="72dp"
-                android:layout_height="40dp"
-                android:onClick="test_button2"
                 android:text="@string/testing" />
 
         </LinearLayout>
