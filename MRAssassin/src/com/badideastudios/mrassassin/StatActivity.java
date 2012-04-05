@@ -2,6 +2,8 @@ package com.badideastudios.mrassassin;
 
 import java.util.ArrayList;
 
+import org.xml.sax.helpers.DefaultHandler;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +14,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class StatActivity extends Activity 
+public class StatActivity extends Activity implements XMLDelegate
 {
 	private ArrayList<AssassinObj> testGroup;
 	/* Pseudo-enumeration for the statistic types */
@@ -90,15 +92,39 @@ public class StatActivity extends Activity
         {
     	default:
     	case TOP_KILLERS:
+    		LeaderboardHandler lh = new LeaderboardHandler();
+    		CreateUserTask cut = new CreateUserTask(this, this, lh);
+    	    cut.SetContent("5");
+    	    cut.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
+    	    cut.SetContentType("text/plain");   	  
+    	    cut.execute();
             statsList.setAdapter( new KillListAdapter(this, testGroup) );
     		break;
     	case TOP_BOUNTY:
-            statsList.setAdapter( new BountyListAdapter(this, testGroup) );
+    	    LeaderboardHandler lh2 = new LeaderboardHandler();
+    		CreateUserTask cut2 = new CreateUserTask(this, this, lh2);
+    	    cut2.SetContent("5");
+    	    cut2.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
+    	    cut2.SetContentType("text/plain");
+    	    cut2.execute();
+            statsList.setAdapter( new BountyListAdapter(this, testGroup) );          
     		break;
     	case TOP_EARNERS:
+    		LeaderboardHandler lh3 = new LeaderboardHandler();
+    		CreateUserTask cut3 = new CreateUserTask(this, this, lh3);
+    	    cut3.SetContent("5");
+    	    cut3.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
+    	    cut3.SetContentType("text/plain");
+    	    cut3.execute();
             statsList.setAdapter( new MoneyListAdapter(this, testGroup) );
     		break;
         }
+    }
+    
+    public void parseComplete(DefaultHandler handler, Boolean result)
+    {
+    	LeaderboardHandler lh = (LeaderboardHandler)handler;
+    	testGroup = lh.assassinList;
     }
     
     /** Handle the menu button press and present options */
