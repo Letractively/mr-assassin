@@ -23,7 +23,8 @@ public class HelpActivity extends Activity {
         			+ "Each following section describes one of the tabs on your phone.\n");
         radar.setText("On this tab, the top half displays important status information regarding sensors and the game.\n" + 
         			"On the bottom half, the radar points towards your target at all times. As you get closer, the radar pointer will get larger." +
-        			"When you reach kill distance, the radar will become a full circle. At that point, the assassinate button will appear. Press the button to kill the target.\n");
+        			"When you reach kill distance, the radar will become a full circle. Press the \"Attempt Attack\" button in order to attack your target.\n" +
+        			"If you are in range, the assassinate button will appear. Press it to kill your target.\n");
         target.setText("On this tab, information about your target is shown. The target's name and stats are shown for you to see.\n");
         stats.setText("On this tab, statistics are shown that rank all current assassins. You can press the arrows at the top in order to check the other categories.");
 	}
