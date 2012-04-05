@@ -121,6 +121,8 @@ public class StatActivity extends Activity
     		startActivity(settingsActivity);
     		return true;
     	case R.id.help:
+    		Intent helpActivity = new Intent(getBaseContext(), HelpActivity.class);
+    		startActivity(helpActivity);
     		return true;
     	case R.id.exit:
     		finish();
