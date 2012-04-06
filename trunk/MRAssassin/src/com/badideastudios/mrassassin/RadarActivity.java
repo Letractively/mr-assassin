@@ -11,6 +11,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.*;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
@@ -56,6 +57,14 @@ public class RadarActivity extends Activity implements XMLDelegate
         super.onCreate(savedInstanceState);
         app = (AssassinApp) getApplication();
         act = this;
+        
+        /** Set up C2DM */
+        
+        Intent registrationIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
+        registrationIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0)); // Boilerplate
+        registrationIntent.putExtra("sender", "anotherbadideastudios@gmail.com");//"mthomasleary@gmail.com");
+        startService(registrationIntent);
+     //   Intent messageIntent = new Intent("com.google.android.c2dm.intent.RECEIVE");
         
     	/** Set up our layout. */
         setContentView(R.layout.radar);
@@ -180,6 +189,17 @@ public class RadarActivity extends Activity implements XMLDelegate
     	Toast.makeText(this, "Assassination Successful.", Toast.LENGTH_SHORT).show();
     	Button killButton = (Button)findViewById(R.id.kill_button);
     	killButton.setVisibility(View.GONE);
+    	CreateUserTask cut = new CreateUserTask(act);
+    	cut.SetAddress("http://mr-assassin.appspot.com/rest/update/kill");
+    	cut.SetContentType("application/xml");
+		cut.setResponse(false);
+		cut.SetContent("<assassin>" +
+				"<tag>" +
+				app.getPlayer().returnTag() +
+				"</tag>" +
+				"</assassin>");
+		cut.execute();
+    	
     	
     }
     
@@ -277,16 +297,17 @@ public class RadarActivity extends Activity implements XMLDelegate
     		
     		CreateUserTask cut = new CreateUserTask(act);
     		MyDefaultHandler mdh = new MyDefaultHandler();
-    		XMLRetrievalClass XMLrc = new XMLRetrievalClass((XMLDelegate) act, mdh);
-    		try {
-				XMLrc.setURL("http://mr-assassin.appspot.com/rest/get/assassins");
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+    //		XMLRetrievalClass XMLrc = new XMLRetrievalClass((XMLDelegate) act, mdh);
+    //		try {
+	//			XMLrc.setURL("http://mr-assassin.appspot.com/rest/get/assassins");
+	//		} catch (MalformedURLException e) {
+	//			// TODO Auto-generated catch block
+	//			e.printStackTrace();
+	//		}
     		
     		cut.SetAddress("http://mr-assassin.appspot.com/rest/update/position");
     		cut.SetContentType("application/xml");
+    		cut.setResponse(false);
     		cut.SetContent("<assassin>" +
 					"<tag>" +
 					app.getPlayer().returnTag() +
@@ -305,9 +326,21 @@ public class RadarActivity extends Activity implements XMLDelegate
     		cut.SetLon(location.getLongitude());
     		cut.SetName(app.getPlayer().returnTag());//appgetOurName());
     		cut.SetMAC(app.getPlayer().returnMACAddress());//app.getOurMAC());
+    	/*	
+    		CreateUserTask cut2 = new CreateUserTask(act);
+    		cut2.SetAddress("http://mr-assassin.appspot.com/rest/get/target");
+    		cut2.SetContentType("text/plain");
+    		cut2.setResponse(true);
+    		cut2.SetContent("<assassin>" +
+    				"<tag>" +
+    				app.getPlayer().returnTag() +
+    				"</tag>" +
+    				"</assassin>");
     		
-    		XMLrc.execute();
+    		*/
+    	//	XMLrc.execute();
     		cut.execute();
+    	//	cut2.execute();
     	}
     	
     	public void onProviderDisabled(String provider)
@@ -336,9 +369,12 @@ public class RadarActivity extends Activity implements XMLDelegate
     		radar.update(event.values, app.getOurLocation(), app.getTarget().returnLoc(), app.getGeoField());
     	}
     };
-
+  
 	public void parseComplete(DefaultHandler handler, Boolean result) {
 		
+		//AssassinHandler ah = (AssassinHandler)handler;
+		//app.setTarget(ah.assassinList.get(0));
+		//app.setTarget(ah.assassinList.get(1));
 		MyDefaultHandler mdh = (MyDefaultHandler)handler;
 		app.setTarget(mdh.targetAssassin);
 		app.setPlayer(mdh.assassin);

@@ -22,11 +22,14 @@ import android.os.AsyncTask;
  */
 public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 	public WeakReference<Activity> parentActivity;
+	XMLDelegate delegate;
+	DefaultHandler handler;
+	public String outputString = "I vant to kill your code! Ah, ah ah!";
 	private String name, targetURL, mac;
 	private int score;
 	private double lat, lon;
-	XMLDelegate delegate;
-	DefaultHandler handler;
+	private boolean getsResponse = false;
+
 	
 	private String contentType, content, response;
 	
@@ -40,9 +43,16 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 		parentActivity = new WeakReference<Activity>(activity);
 		this.delegate = delegate;
 		this.handler = handler;
+	}
+/*	
+	public CreateUserTask(Activity activity, XMLDelegate delegate, DefaultHandler handler)
+	{
+		parentActivity = new WeakReference<Activity>(activity);
+		this.delegate = delegate;
+		this.handler = handler;
 		
 	}
-
+*/
 	@Override
 	protected void onPreExecute()
 	{
@@ -55,29 +65,6 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 		{
 			// Create the XML string we want to send
 			String xmlString = new String();
-		/*	xmlString = 
-					
-			//	"<assassins>" +
-				"<assassin>" +
-				//"<score>" +
-				//score +
-				//"</score>" +
-				"<tag>" +
-				name +
-				"</tag>" +
-				"<lat>" +
-				lat +
-				"</lat>" +
-				"<lon>" +
-				lon +
-				"</lon>" +
-				"<mac>" +
-				mac +
-				"</mac>" +
-				"</assassin>";// +
-			//	"</assassins>";
-			
-		*/	
 			// And create the address we want to use (for now, we'll just use one address)
 			String content = this.content;
 			String contentType = this.contentType;
@@ -89,19 +76,18 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 			
 			// Create a string entity of our XML string
 			StringEntity se = new StringEntity(content, HTTP.UTF_8);
-			//StringEntity se = new StringEntity(xmlString, HTTP.UTF_8);
 			// Set ContentType to "application/xml" so the server will accept it
 			se.setContentType(contentType);//"application/xml");
-			//se.setContentType("application/xml");
-			//se.setContentType("")
-			//se.set
+
 			httppost.setEntity(se);
 			HttpResponse httpresponse = httpclient.execute(httppost);
 			String strResponse = EntityUtils.toString(httpresponse.getEntity());
-			if(strResponse != null)
+			if((strResponse != null) && getsResponse)
+			{
+				outputString = strResponse;
 				System.out.println(strResponse);
-			HttpEntity he = httpresponse.getEntity();
-			//System.out.println()
+			}
+	//		HttpEntity he = httpresponse.getEntity();
 			System.out.println("HEAR YE HEAR YE, " + httpresponse.getStatusLine().getStatusCode());
 			
 			return (httpresponse.getStatusLine().getStatusCode() == 200);
@@ -121,9 +107,14 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 			System.out.println("Successful delivery");
 		}
 		else System.out.println("Shamefrul dispray");
-		if(delegate != null)
-			delegate.parseComplete(handler, result);
+		if(getsResponse)
+		{
+			XMLParser xmlp = new XMLParser(delegate, handler);
+			xmlp.setInput(outputString);
+			xmlp.execute();
+		}
 	}
+
 
 	public void SetInformation(String name, int score)
 	{
@@ -166,9 +157,13 @@ public class CreateUserTask extends AsyncTask<Void, Void, Boolean>{
 		this.contentType = contentType;
 	}
 	
+	public void setResponse(boolean response)
+	{
+		this.getsResponse = response;
+	}
 	public String GetOutput()
 	{
-		return response;
+		return outputString;
 	}
 	
 

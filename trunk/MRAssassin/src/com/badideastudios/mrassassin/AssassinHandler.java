@@ -9,6 +9,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class AssassinHandler extends DefaultHandler {
 	
 	StringBuffer buffer; 
+	ArrayList<AssassinObj> assassinList = new ArrayList<AssassinObj>();
 
 	AssassinObj assassin = new AssassinObj();
 
@@ -77,6 +78,8 @@ public class AssassinHandler extends DefaultHandler {
 			assassin.setBounty(Integer.parseInt(buffer.toString()));
 		else if(localName.equals("macaddr"))
 			assassin.setMAC(buffer.toString());
+		else if(localName.equals("assassin"))
+			assassinList.add(assassin);
 		// Called when the parser ends an element		
 	}
 }

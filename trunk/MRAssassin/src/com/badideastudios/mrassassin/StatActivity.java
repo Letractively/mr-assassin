@@ -38,6 +38,17 @@ public class StatActivity extends Activity implements XMLDelegate
         emptyText = (TextView) findViewById(R.id.stat_list_empty);
         statsList.setEmptyView(emptyText);
         
+        LeaderboardHandler lh = new LeaderboardHandler();
+		CreateUserTask cut = new CreateUserTask(this, this, lh);
+	    cut.SetContent("5");
+	    cut.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bykills");
+	    cut.SetContentType("text/plain");  
+	    cut.setResponse(true);
+	 //   XMLParser xmlp = new XMLParser(this, lh);
+	    cut.execute();
+	  //  xmlp.setInput(cut.outputString);
+	  //  xmlp.execute();
+        
         //TEST CODE: Remove when adding real data!
         testGroup = new ArrayList<AssassinObj>();
         testGroup.add( new AssassinObj("Altair", 10, 100, "Somebody", "00:00:00:00:00:00", 5000, 5, 10000) );
@@ -49,7 +60,7 @@ public class StatActivity extends Activity implements XMLDelegate
         /** Fill all of the data views with our data */
         currentCategory = TOP_KILLERS;
         statsList.setAdapter( new MoneyListAdapter(this, testGroup) );
-        refreshPage();
+   //     refreshPage();
 	}
 	
 	/** Handle left and right button presses*/
@@ -93,21 +104,24 @@ public class StatActivity extends Activity implements XMLDelegate
     	default:
     	case TOP_KILLERS:
     		LeaderboardHandler lh = new LeaderboardHandler();
-    		CreateUserTask cut = new CreateUserTask(this, this, lh);
-    	    cut.SetContent("5");
-    	    cut.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
-    	    cut.SetContentType("text/plain");   	  
-    	    cut.execute();
-            statsList.setAdapter( new KillListAdapter(this, testGroup) );
+    		CreateUserTask cut1 = new CreateUserTask(this, this, lh);
+    	    cut1.SetContent("5");
+    	    cut1.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bykills");
+    	    cut1.SetContentType("text/plain");   
+    	    cut1.setResponse(true);
+    	    
+    	    cut1.execute();
+    //        statsList.setAdapter( new KillListAdapter(this, testGroup) );
     		break;
     	case TOP_BOUNTY:
     	    LeaderboardHandler lh2 = new LeaderboardHandler();
     		CreateUserTask cut2 = new CreateUserTask(this, this, lh2);
     	    cut2.SetContent("5");
-    	    cut2.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
+    	    cut2.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bybounty");
     	    cut2.SetContentType("text/plain");
+    	    cut2.setResponse(true);
     	    cut2.execute();
-            statsList.setAdapter( new BountyListAdapter(this, testGroup) );          
+   //         statsList.setAdapter( new BountyListAdapter(this, testGroup) );          
     		break;
     	case TOP_EARNERS:
     		LeaderboardHandler lh3 = new LeaderboardHandler();
@@ -115,16 +129,32 @@ public class StatActivity extends Activity implements XMLDelegate
     	    cut3.SetContent("5");
     	    cut3.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
     	    cut3.SetContentType("text/plain");
+    	    cut3.setResponse(true);
     	    cut3.execute();
-            statsList.setAdapter( new MoneyListAdapter(this, testGroup) );
+   //         statsList.setAdapter( new MoneyListAdapter(this, testGroup) );
     		break;
         }
     }
     
     public void parseComplete(DefaultHandler handler, Boolean result)
     {
-    	LeaderboardHandler lh = (LeaderboardHandler)handler;
+    	LeaderboardHandler lh = new LeaderboardHandler();
+    	lh = (LeaderboardHandler)handler;
+    	testGroup = new ArrayList<AssassinObj>();
     	testGroup = lh.assassinList;
+    	switch(currentCategory)
+    	{
+    	default:
+    	case TOP_KILLERS:
+    		statsList.setAdapter( new KillListAdapter(this, testGroup) );
+    		break;
+    	case TOP_BOUNTY:
+    		statsList.setAdapter( new BountyListAdapter(this, testGroup) );
+    		break;
+    	case TOP_EARNERS:
+    		statsList.setAdapter( new MoneyListAdapter(this, testGroup) );
+    	break;
+    	}
     }
     
     /** Handle the menu button press and present options */
