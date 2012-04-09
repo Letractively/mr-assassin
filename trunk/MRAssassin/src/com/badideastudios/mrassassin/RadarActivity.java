@@ -13,6 +13,7 @@ import android.bluetooth.*;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,7 +50,9 @@ public class RadarActivity extends Activity implements XMLDelegate
 	private static SensorManager sensorManager;
 	private TextView GPStext;
 	
-	private RadarActivity act; 
+	SharedPreferences sharedPrefs;
+	
+	private RadarActivity act;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -64,6 +67,7 @@ public class RadarActivity extends Activity implements XMLDelegate
         registrationIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0)); // Boilerplate
         registrationIntent.putExtra("sender", "anotherbadideastudios@gmail.com");//"mthomasleary@gmail.com");
         startService(registrationIntent);
+
      //   Intent messageIntent = new Intent("com.google.android.c2dm.intent.RECEIVE");
         
     	/** Set up our layout. */
@@ -81,7 +85,7 @@ public class RadarActivity extends Activity implements XMLDelegate
         
         /** Find out our Bluetooth MAC for the server. */
         app.getPlayer().setMAC( ourAdapter.getAddress() );
-        GPStext.setText( "Our MAC: " + app.getPlayer().returnMACAddress());//getOurMAC() );
+       // BMACtext.setText( "Our MAC: " + app.getPlayer().returnMACAddress()); );
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -293,9 +297,17 @@ public class RadarActivity extends Activity implements XMLDelegate
     		{
     			app.updateLocation(location);
     		}
+            /** Set up C2DM */
+            Intent registrationIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
+            registrationIntent.putExtra("app", PendingIntent.getBroadcast(act, 0, new Intent(), 0)); // Boilerplate
+            registrationIntent.putExtra("sender", "anotherbadideastudios@gmail.com");//"mthomasleary@gmail.com");
+            startService(registrationIntent);
+    		
     		
     		CreateUserTask cut = new CreateUserTask(act);
     		MyDefaultHandler mdh = new MyDefaultHandler();
+    		sharedPrefs = getSharedPreferences("AssassinPrefs", 0);
+    		mdh.userName = sharedPrefs.getString("Username", "");
     //		XMLRetrievalClass XMLrc = new XMLRetrievalClass((XMLDelegate) act, mdh);
     //		try {
 	//			XMLrc.setURL("http://mr-assassin.appspot.com/rest/get/assassins");

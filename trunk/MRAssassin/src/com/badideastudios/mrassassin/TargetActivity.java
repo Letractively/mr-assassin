@@ -7,6 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 public class TargetActivity extends Activity implements XMLDelegate
 {
 	protected AssassinApp app;
+	SharedPreferences sharedPrefs;
 	
 	TextView name, currentKills, currentBounty, currentMoney;
 	ProgressDialog dialog;
@@ -43,7 +45,17 @@ public class TargetActivity extends Activity implements XMLDelegate
 	    //cut.SetInformation("sewellka");
 	    
 	    // GET
+	    sharedPrefs = getSharedPreferences("AssassinPrefs", 0);
+	    AssassinHandler ah = new AssassinHandler();
+	    CreateUserTask cut = new CreateUserTask(this,this, ah);
+	    cut.SetAddress("http://mr-assassin.appspot.com/rest/get/target");
+	    cut.SetContent(sharedPrefs.getString("Username", ""));
+	    cut.SetContentType("text/plain");
+	    
+	    cut.execute();
+	    /*
 		MyDefaultHandler mdh = new MyDefaultHandler();
+		mdh.userName = sharedPrefs.getString("Username", "");
 		XMLRetrievalClass XMLrc = new XMLRetrievalClass(this, mdh);
 		
 		try {
@@ -54,7 +66,7 @@ public class TargetActivity extends Activity implements XMLDelegate
 		}
 		XMLrc.execute();
 		//cut.execute();
-
+		*/
 		dialog.show();
 		/*
 		app.setTargetName(mdh.assassinName);
@@ -70,6 +82,10 @@ public class TargetActivity extends Activity implements XMLDelegate
 	}
 	public void parseComplete(DefaultHandler handler, Boolean result) {
 		dialog.hide();
+		AssassinHandler ah = (AssassinHandler)handler;
+		app.setPlayer(ah.assassinList.get(0));
+		app.setTarget(ah.assassinList.get(1));
+		/*
 		MyDefaultHandler mdh = (MyDefaultHandler)handler;
 		app.setTarget(mdh.targetAssassin);
 		app.setPlayer(mdh.assassin);

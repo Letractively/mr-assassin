@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
@@ -13,6 +14,7 @@ public class ReceiverC2DM extends BroadcastReceiver {
 
 	private static String KEY = "c2dmPref";
 	private static String REGISTRATION_KEY = "registrationKey";
+	private SharedPreferences sharedPrefs;
 	
 	private Context context;
 	@Override
@@ -54,6 +56,7 @@ public class ReceiverC2DM extends BroadcastReceiver {
 		}else if(registration != null)
 		{
 			Log.d("c2dm", registration);
+		//	Editor edit = sharedPrefs.edit();
 			Editor editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit();
 			editor.putString(REGISTRATION_KEY, registration);
 			editor.commit();
@@ -64,7 +67,8 @@ public class ReceiverC2DM extends BroadcastReceiver {
 	{
 		System.out.println("Message handled");
 		String message = intent.getExtras().getString("payload");
-		if(message == "killed")
+		String value = "killed";
+		if(message.equals(value))
 		{
 			String ns = Context.NOTIFICATION_SERVICE;
 			NotificationManager nManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
