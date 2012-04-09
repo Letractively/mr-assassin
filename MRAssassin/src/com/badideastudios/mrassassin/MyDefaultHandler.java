@@ -6,9 +6,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.content.SharedPreferences;
+
 public class MyDefaultHandler extends DefaultHandler {
 	
 	StringBuffer buffer; 
+	public String userName = "";
+	SharedPreferences sharedPref;
 	ArrayList<AssassinObj> assassinList = new ArrayList<AssassinObj>();
 	AssassinObj assassin = new AssassinObj();
 	AssassinObj targetAssassin, currentAssassin;
@@ -22,13 +26,16 @@ public class MyDefaultHandler extends DefaultHandler {
 	@Override
 	public void endDocument() throws SAXException
 	{
+	//	sharedPref = getSharedPreferences("AssassinPrefs", 0);
 		System.out.println(assassinList.size());
 		if(assassinList.size() > 0)
 		{
 			for(int i = 0; i < assassinList.size(); i++)
 			{
 				String userTag = assassinList.get(i).returnTag();
-				String userName = "howlingblue";
+				System.out.println(userTag);
+	//			String userName = sharedPref.getString("Username", "");
+				System.out.println(userName);
 					if(userTag.equals(userName)) // FOR TESTING PURPOSES, MANUALLY ENTER ID
 					{
 						assassin = assassinList.get(i);

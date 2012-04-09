@@ -1,6 +1,7 @@
 package com.badideastudios.mrassassin;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 public class SettingsActivity extends PreferenceActivity
 {
 	AssassinApp app;
+	SharedPreferences sharedPrefs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -17,10 +19,11 @@ public class SettingsActivity extends PreferenceActivity
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.prefs);
 		app = (AssassinApp) getApplication();
+		sharedPrefs = getSharedPreferences("AssassinPrefs", 0);
 		
 		/**Access player information for display*/
 		Preference playerNamePref = (Preference) findPreference("UserPref");
-		playerNamePref.setSummary( app.getOurName() );
+		playerNamePref.setSummary( sharedPrefs.getString("Username", "NoName") );
 		
 		/**Access version information for display*/
 		Preference versionPref = (Preference) findPreference("VersionPref");
