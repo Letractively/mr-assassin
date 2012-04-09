@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/login_title"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/title_login"
@@ -51,8 +51,9 @@
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_button_text" />
+        android:text="@string/login_button_text"
+        android:onClick="login" />
 
 </LinearLayout>

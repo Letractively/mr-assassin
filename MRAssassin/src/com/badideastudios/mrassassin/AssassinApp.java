@@ -1,17 +1,5 @@
 package com.badideastudios.mrassassin;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-
-
 import android.app.Application;
 import android.hardware.GeomagneticField;
 import android.location.Location;
@@ -21,20 +9,10 @@ public class AssassinApp extends Application
 {
 	/** Player Information */
 	private AssassinObj target, player;
-	private String playerName;
-	private int ourBounty;
-	private int currentMoney;
 	
 	/** Sensor Information */
-	private String ourBluetoothMAC;
 	private Location lastBestLocation;
 	private GeomagneticField field;
-	
-	/** Target Information */
-	private String targetName;
-	private int targetBounty = 3;
-	private Location targetLocation;
-	private String targetMAC;
 	
 	/** Misc Information */
 	private String version;
@@ -44,14 +22,12 @@ public class AssassinApp extends Application
 	
 	public void onCreate() 
 	{ 
+		//Populate version information for menu
 		version = "1.0 r36";
-		//Initializing fields to prevent null references
+		
+		//Initialize fields to prevent null references
 		player = new AssassinObj();
 		target = new AssassinObj();
-		playerName = "Test Player";
-		ourBounty = 400;
-		currentMoney = 1500;
-		ourBluetoothMAC = "00:00:00:00:00";
 		lastBestLocation = new Location("");
 		lastBestLocation.setLatitude(1);
 		lastBestLocation.setLongitude(1);
@@ -62,18 +38,6 @@ public class AssassinApp extends Application
 				Double.valueOf(lastBestLocation.getLongitude()).floatValue(),
 				Double.valueOf(lastBestLocation.getAltitude()).floatValue(),
 				System.currentTimeMillis());
-		
-		//DELETE THIS LATER! Initializing for test purposes
-		targetName = "Altair";
-		targetBounty = 1000;
-		targetLocation = new Location("");
-		/* ARCC: Lat: 30.619425 Long: -96.338041
-		 * Complex: Lat: 30.640709 Long: -96.317943
-		 * Emer Tech Court: Lat: 30.622116 Long: -96.338950
-		 */
-	//	targetLocation.setLatitude(30.640709);
-	//	targetLocation.setLongitude(-96.317943);
-	//	targetMAC = "98:4B:4A:80:F1:36";
 	}
 	
 	// Variable functions
@@ -98,11 +62,6 @@ public class AssassinApp extends Application
 	public AssassinObj getTarget()
 	{
 		return target;
-	}
-	
-	public void setOurMAC(String mac)
-	{
-		ourBluetoothMAC = mac;
 	}
 	
 	public Location getPlayerLocation()

@@ -80,9 +80,8 @@ public class RadarActivity extends Activity implements XMLDelegate
         }
         
         /** Find out our Bluetooth MAC for the server. */
-        app.setOurMAC( ourAdapter.getAddress() );
         app.getPlayer().setMAC( ourAdapter.getAddress() );
-       // BMACtext.setText( "Our MAC: " + app.getPlayer().returnMACAddress());//getOurMAC() );
+       // BMACtext.setText( "Our MAC: " + app.getPlayer().returnMACAddress()); );
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);

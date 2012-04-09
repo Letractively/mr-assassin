@@ -33,7 +33,8 @@ public class SettingsActivity extends PreferenceActivity
                 public boolean onPreferenceClick(Preference preference) 
                 {
                         Toast.makeText(getBaseContext(), "Logging out.", Toast.LENGTH_LONG).show();
-                        //Remove all player information and return to login activity.
+                		Intent loginActivity = new Intent(getBaseContext(), LoginActivity.class);
+                		startActivity(loginActivity);
                         return true;
                 }
 
