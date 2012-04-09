@@ -49,7 +49,7 @@ public class RadarActivity extends Activity implements XMLDelegate
 	private static SensorManager sensorManager;
 	private TextView GPStext;
 	
-	private RadarActivity act;
+	private RadarActivity act; 
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -81,7 +81,7 @@ public class RadarActivity extends Activity implements XMLDelegate
         
         /** Find out our Bluetooth MAC for the server. */
         app.getPlayer().setMAC( ourAdapter.getAddress() );
-       // BMACtext.setText( "Our MAC: " + app.getPlayer().returnMACAddress()); );
+        GPStext.setText( "Our MAC: " + app.getPlayer().returnMACAddress());//getOurMAC() );
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
