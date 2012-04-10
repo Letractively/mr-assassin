@@ -23,7 +23,11 @@ public class SettingsActivity extends PreferenceActivity
 		
 		/**Access player information for display*/
 		Preference playerNamePref = (Preference) findPreference("UserPref");
-		playerNamePref.setSummary( sharedPrefs.getString("Username", "NoName") );
+		playerNamePref.setSummary( sharedPrefs.getString("Username", "No Name") );
+		
+		/**Access server information for display*/
+		Preference serverNamePref = (Preference) findPreference("ServerPref");
+		serverNamePref.setSummary( sharedPrefs.getString("Server", "No Server") );
 		
 		/**Access version information for display*/
 		Preference versionPref = (Preference) findPreference("VersionPref");
@@ -37,6 +41,7 @@ public class SettingsActivity extends PreferenceActivity
                 {
                         Toast.makeText(getBaseContext(), "Logging out.", Toast.LENGTH_LONG).show();
                 		Intent loginActivity = new Intent(getBaseContext(), LoginActivity.class);
+                		loginActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 		startActivity(loginActivity);
                         return true;
                 }

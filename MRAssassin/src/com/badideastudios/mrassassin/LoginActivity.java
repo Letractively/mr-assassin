@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 public class LoginActivity extends Activity 
 {
 	private EditText userForm;
-	private EditText passForm;
+	//private EditText passForm;
 	private EditText servForm;
 	private SharedPreferences settings;
 	
@@ -25,7 +24,7 @@ public class LoginActivity extends Activity
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.login);    
 	    userForm = (EditText) findViewById(R.id.username_entry);
-	    passForm = (EditText) findViewById(R.id.password_entry);
+	    //passForm = (EditText) findViewById(R.id.password_entry);
 	    servForm = (EditText) findViewById(R.id.server_entry);
 	    
 	    /* Load previous user settings, if available. */
@@ -40,16 +39,17 @@ public class LoginActivity extends Activity
 	public void login(View v)
 	{
 		// If all fields are not empty...
-		if(userForm.length() <= 0 || passForm.length() <=0 || servForm.length() <= 0)
+		if(userForm.length() <= 0 /*|| passForm.length() <=0 */|| servForm.length() <= 0)
 		{
 			Toast.makeText(this, "All fields must be filled in.", Toast.LENGTH_LONG).show();
 			return;
 		}
 
 		/* Grab the form data. */
-		String username, password, server;
+		String username, server;
+		//String password;
 		username = userForm.getText().toString();
-		password = passForm.getText().toString();
+		//password = passForm.getText().toString();
 		server = servForm.getText().toString();
 		
 		/* Check for any errors. */
@@ -58,14 +58,11 @@ public class LoginActivity extends Activity
 			Toast.makeText(this, "Username cannot contain a space.", Toast.LENGTH_LONG).show();
 			return;
 		}
-		if( password.length() < 6 )
+		/*if( password.length() < 6 )
 		{
 			Toast.makeText(this, "Password is too short. Password must be at least 6 characters.", Toast.LENGTH_LONG).show();
 			return;
-		}
-		
-		//For debugging
-		Toast.makeText(this, "Username: " + username +"\nPassword: " + password + "\nServer: " + server, Toast.LENGTH_LONG).show();
+		}*/
 		
 		/* Save user name and server data to user preferences for use if they need to login again. */
 		settings = getSharedPreferences("AssassinPrefs", 0);
@@ -74,7 +71,11 @@ public class LoginActivity extends Activity
 		settingEditor.putString("Server", server);
 		settingEditor.commit();
 		
-		/* Perform a login at our server and to Google's C2DM service. */
+		/* Perform a login at our server. */
+		
+		/* Launch the game. */
+    	Intent gameActivity = new Intent(getBaseContext(), TabWidget.class);
+    	startActivity(gameActivity);
 	}
     
     /** Handle the menu button press and present options */
