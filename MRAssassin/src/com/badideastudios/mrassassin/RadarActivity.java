@@ -302,6 +302,7 @@ public class RadarActivity extends Activity implements XMLDelegate
             registrationIntent.putExtra("app", PendingIntent.getBroadcast(act, 0, new Intent(), 0)); // Boilerplate
             registrationIntent.putExtra("sender", "anotherbadideastudios@gmail.com");//"mthomasleary@gmail.com");
             startService(registrationIntent);
+            System.out.println("Registration update successful");
     		
     		
     		CreateUserTask cut = new CreateUserTask(act);
@@ -319,6 +320,8 @@ public class RadarActivity extends Activity implements XMLDelegate
     		cut.SetAddress("http://mr-assassin.appspot.com/rest/update/position");
     		cut.SetContentType("application/xml");
     		cut.setResponse(false);
+    		String registrationKey = sharedPrefs.getString("registrationKey", "");
+    		System.out.println("Registration key is " + registrationKey);
     		cut.SetContent("<assassin>" +
 					"<tag>" +
 					app.getPlayer().returnTag() +
@@ -333,7 +336,7 @@ public class RadarActivity extends Activity implements XMLDelegate
 					app.getPlayer().returnMACAddress() +
 					"</mac>" +
 					"<regID>" +
-					sharedPrefs.getString("registrationKey", "") +
+					registrationKey +
 					"</regID>" +
 					"</assassin>");
     		cut.SetLat(location.getLatitude());
