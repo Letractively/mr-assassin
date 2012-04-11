@@ -322,6 +322,7 @@ public class RadarActivity extends Activity implements XMLDelegate
     		cut.setResponse(false);
     		String registrationKey = sharedPrefs.getString("registrationKey", "");
     		System.out.println("Registration key is " + registrationKey);
+    		//System.out.println("C2DM Prefs is " + sharedPrefs.getString("c2dmPref", ""));
     		cut.SetContent("<assassin>" +
 					"<tag>" +
 					app.getPlayer().returnTag() +

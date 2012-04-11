@@ -14,7 +14,7 @@ public class ReceiverC2DM extends BroadcastReceiver {
 
 	private static String KEY = "c2dmPref";
 	private static String REGISTRATION_KEY = "registrationKey";
-	private SharedPreferences sharedPrefs;
+	private SharedPreferences sharedPrefs, sharedPrefsAssassin;
 	
 	private Context context;
 	@Override
@@ -55,6 +55,10 @@ public class ReceiverC2DM extends BroadcastReceiver {
 			Log.d("c2dm", "unregistered");
 		}else if(registration != null)
 		{
+			sharedPrefsAssassin = context.getSharedPreferences("AssassinPrefs", 0);
+			Editor editor2 = sharedPrefsAssassin.edit();
+			editor2.putString(REGISTRATION_KEY, registration);
+			editor2.commit();
 			Log.d("c2dm", registration);
 		//	Editor edit = sharedPrefs.edit();
 			Editor editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit();
