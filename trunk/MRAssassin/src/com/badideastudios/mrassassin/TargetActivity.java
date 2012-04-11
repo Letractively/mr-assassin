@@ -25,6 +25,7 @@ public class TargetActivity extends Activity implements XMLDelegate
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
+		sharedPrefs = getSharedPreferences("AssassinPrefs", 0);
 	    super.onCreate(savedInstanceState);
 	    app = (AssassinApp)getApplication();
 	    setContentView(com.badideastudios.mrassassin.R.layout.target);
@@ -45,6 +46,7 @@ public class TargetActivity extends Activity implements XMLDelegate
 	    //cut.SetInformation("sewellka");
 	    
 	    // GET
+	    /*
 	    sharedPrefs = getSharedPreferences("AssassinPrefs", 0);
 	    AssassinHandler ah = new AssassinHandler();
 	    CreateUserTask cut = new CreateUserTask(this,this, ah);
@@ -53,7 +55,7 @@ public class TargetActivity extends Activity implements XMLDelegate
 	    cut.SetContentType("text/plain");
 	    
 	    cut.execute();
-	    /*
+	    */
 		MyDefaultHandler mdh = new MyDefaultHandler();
 		mdh.userName = sharedPrefs.getString("Username", "");
 		XMLRetrievalClass XMLrc = new XMLRetrievalClass(this, mdh);
@@ -66,7 +68,7 @@ public class TargetActivity extends Activity implements XMLDelegate
 		}
 		XMLrc.execute();
 		//cut.execute();
-		*/
+		
 		dialog.show();
 		/*
 		app.setTargetName(mdh.assassinName);
@@ -82,10 +84,10 @@ public class TargetActivity extends Activity implements XMLDelegate
 	}
 	public void parseComplete(DefaultHandler handler, Boolean result) {
 		dialog.hide();
-		AssassinHandler ah = (AssassinHandler)handler;
-		app.setPlayer(ah.assassinList.get(0));
-		app.setTarget(ah.assassinList.get(1));
-		/*
+	//	AssassinHandler ah = (AssassinHandler)handler;
+	//	app.setPlayer(ah.assassinList.get(0));
+	//	app.setTarget(ah.assassinList.get(1));
+		
 		MyDefaultHandler mdh = (MyDefaultHandler)handler;
 		app.setTarget(mdh.targetAssassin);
 		app.setPlayer(mdh.assassin);
