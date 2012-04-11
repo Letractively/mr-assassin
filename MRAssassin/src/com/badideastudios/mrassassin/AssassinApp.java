@@ -1,18 +1,21 @@
 package com.badideastudios.mrassassin;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.hardware.GeomagneticField;
 import android.location.Location;
 
 /** This is the best location to store variables that are important to multiple activities.*/
 public class AssassinApp extends Application
 {
+	SharedPreferences sharedPrefs;
 	/** Player Information */
 	private AssassinObj target, player;
 	
 	/** Sensor Information */
 	private Location lastBestLocation;
 	private GeomagneticField field;
+	
 	
 	/** Misc Information */
 	private String version;
@@ -26,7 +29,10 @@ public class AssassinApp extends Application
 		version = "1.0 r36";
 		
 		//Initialize fields to prevent null references
+		sharedPrefs = getSharedPreferences("AssassinPrefs", 0);
 		player = new AssassinObj();
+		String username = sharedPrefs.getString("Username", "");
+		player.setTag(username);
 		target = new AssassinObj();
 		lastBestLocation = new Location("");
 		lastBestLocation.setLatitude(1);

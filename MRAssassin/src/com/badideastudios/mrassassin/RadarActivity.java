@@ -332,6 +332,9 @@ public class RadarActivity extends Activity implements XMLDelegate
 					"<mac>" +
 					app.getPlayer().returnMACAddress() +
 					"</mac>" +
+					"<regID>" +
+					sharedPrefs.getString("registrationKey", "") +
+					"</regID>" +
 					"</assassin>");
     		cut.SetLat(location.getLatitude());
     		cut.SetLon(location.getLongitude());
