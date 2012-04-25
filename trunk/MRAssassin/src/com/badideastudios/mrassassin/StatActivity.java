@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.xml.sax.helpers.DefaultHandler;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -181,6 +182,9 @@ public class StatActivity extends Activity implements XMLDelegate
     		startActivity(helpActivity);
     		return true;
     	case R.id.exit:
+    		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+    		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
+    		startService(unregIntent);
     		finish();
     		return true;
     	default:
