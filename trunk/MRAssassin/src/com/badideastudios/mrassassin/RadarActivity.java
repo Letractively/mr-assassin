@@ -90,7 +90,7 @@ public class RadarActivity extends Activity implements XMLDelegate
 
         /** Grab GPS sensor and set it up to update automatically. */
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15, 15, GPSListener);
+        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 10, GPSListener);
         
         /** Verify we have a compass sensor. */
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -225,11 +225,6 @@ public class RadarActivity extends Activity implements XMLDelegate
     	if( sharedPrefs.getBoolean("NoteVibePref", true) == true)
     		warningNote.defaults |= Notification.DEFAULT_VIBRATE;
     	noteManager.notify(warnID, warningNote);
-    }
-    
-    public void warn(View v)
-    {
-    	warn();
     }
     
     public void setGPSText(String text)    { GPStext.setText(text); }
