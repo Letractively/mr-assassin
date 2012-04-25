@@ -55,6 +55,7 @@ public class ReceiverC2DM extends BroadcastReceiver {
 		}else if(intent.getStringExtra("unregistered") != null)
 		{
 			Log.d("c2dm", "unregistered");
+			System.out.println("Unregistration successful");
 		}else if(registration != null)
 		{
 			sharedPrefsAssassin = context.getSharedPreferences("AssassinPrefs", 0);

@@ -1,6 +1,7 @@
 package com.badideastudios.mrassassin;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -94,6 +95,9 @@ public class LoginActivity extends Activity
     	switch( item.getItemId() )
     	{
     	case R.id.exit:
+    		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+    		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
+    		startService(unregIntent);
     		finish();
     		return true;
     	default:
