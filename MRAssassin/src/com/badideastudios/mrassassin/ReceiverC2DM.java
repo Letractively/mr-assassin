@@ -73,8 +73,9 @@ public class ReceiverC2DM extends BroadcastReceiver {
 	{
 		System.out.println("Message handled");
 		String message = intent.getExtras().getString("payload");
-		String value = "killed";
-		if(message.equals(value))
+		String killed = "killed";
+		String warning = "warning";
+		if(message.equals(killed))
 		{
 			NotificationManager nManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 			int icon = R.drawable.dagger;
@@ -99,6 +100,33 @@ public class ReceiverC2DM extends BroadcastReceiver {
 			
 			final int KILL_ID = 1;
 			nManager.notify(KILL_ID, notification);					
+		}
+		
+		if(message.equals(warning))
+		{
+			NotificationManager nManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+			int icon = R.drawable.dagger;
+			CharSequence tickerText = "WARNING";
+			long when = System.currentTimeMillis();
+			
+			Notification notification = new Notification(icon, tickerText, when);
+			
+			Context context2 = context.getApplicationContext();
+			CharSequence contentTitle = "MRAssassins";
+			CharSequence contentText = "A pursuer is nearby!";
+			Intent notificationIntent = new Intent(context, ReceiverC2DM.class);
+			PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+			
+			notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+			sharedPrefsAssassin = PreferenceManager.getDefaultSharedPreferences(context);
+			if( sharedPrefsAssassin.getBoolean("NoteSoundPref", true) == true)
+				notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.warning);
+	    	if( sharedPrefsAssassin.getBoolean("NoteVibePref", true) == true)
+	    		notification.defaults |= Notification.DEFAULT_VIBRATE;
+			
+			final int WARN_ID = 1;
+			nManager.notify(WARN_ID, notification);					
 		}
 		Log.e("", "message: " + message);
 		// Handle the message here
