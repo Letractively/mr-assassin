@@ -2,16 +2,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     <PreferenceCategory android:title="Bad Idea Studios" android:key="BadIdeaCategory">
         <Preference android:key="Author1" android:title="Vincent Kocks" android:summary="Android Interface Programmer" android:selectable="false"/>
-        <Preference android:key="Author2" android:title="Matthew Leary" android:summary="Server Communication Programmer"/>
-        <Preference android:key="Author3" android:title="Andrew Mauney" android:summary="Game Server Programmer"/>
-        <Preference android:key="Author4" android:title="Kedric Sewell" android:summary="Device Communication Programmer"/>
+        <Preference android:key="Author2" android:title="Matthew Leary" android:summary="Server Communication Programmer" android:selectable="false"/>
+        <Preference android:key="Author3" android:title="Andrew Mauney" android:summary="Game Server Programmer" android:selectable="false"/>
+        <Preference android:key="Author4" android:title="Kedric Sewell" android:summary="Device Communication Programmer" android:selectable="false"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Icon Assistance" android:key="IconHelpCategory">
-        <Preference android:key="IconHelp1" android:title="IconShock" android:summary="http://www.iconshock.com/android-icons/"/>
-        <Preference android:key="IconHelp2" android:title="Martina Šmejkalová" android:summary="http://www.sireasgallery.com/"/>
+    <PreferenceCategory android:title="Icon Designs" android:key="IconHelpCategory">
+        <Preference android:key="IconHelp1" android:title="IconShock" android:summary="http://www.iconshock.com/android-icons/" android:selectable="false"/>
+        <Preference android:key="IconHelp2" android:title="Martina Šmejkalová" android:summary="http://www.sireasgallery.com/" android:selectable="false"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Special Thanks" android:key="SpecialThanksCategory">
-        <Preference android:key="Professor" android:title="Zachary Toups" android:summary="Project Overseer"/>
+    <PreferenceCategory android:title="Sound Designs" android:key="SoundDesignCategory">
+        <Preference android:key="Sounds1" android:selectable="false" android:title="SomeAudioGuy @ Freesound.org" android:summary="Warning sound"/>
+        <Preference android:selectable="false" android:key="Sounds2" android:title="iwilldstroyu @ Freesound.org" android:summary="Kill sound"/>
+        
+    </PreferenceCategory><PreferenceCategory android:title="Special Thanks" android:key="SpecialThanksCategory">
+        <Preference android:key="Professor" android:title="Zachary O. Dugas Toups, Ph.D." android:summary="Project Overseer"/>
+        <Preference android:title="William A. Hamilton" android:summary="Grader, Idea Guy" android:key="TA"/>
     </PreferenceCategory>
     
 
