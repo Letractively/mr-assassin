@@ -8,13 +8,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class ReceiverC2DM extends BroadcastReceiver {
 
 	private static String KEY = "c2dmPref";
 	private static String REGISTRATION_KEY = "registrationKey";
-	private SharedPreferences sharedPrefs, sharedPrefsAssassin;
+	private SharedPreferences sharedPrefsAssassin;
 	
 	private Context context;
 	@Override
@@ -74,7 +76,6 @@ public class ReceiverC2DM extends BroadcastReceiver {
 		String value = "killed";
 		if(message.equals(value))
 		{
-			String ns = Context.NOTIFICATION_SERVICE;
 			NotificationManager nManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 			int icon = R.drawable.dagger;
 			CharSequence tickerText = "DEAD";
@@ -89,10 +90,15 @@ public class ReceiverC2DM extends BroadcastReceiver {
 			PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 			
 			notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+			sharedPrefsAssassin = PreferenceManager.getDefaultSharedPreferences(context);
+	    	if( sharedPrefsAssassin.getBoolean("NoteSoundPref", true) == true)
+	    		notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.stab);
+	    	if( sharedPrefsAssassin.getBoolean("NoteVibePref", true) == true)
+	    		notification.defaults |= Notification.DEFAULT_VIBRATE;
 			
 			final int KILL_ID = 1;
-			nManager.notify(KILL_ID, notification);			
-			
+			nManager.notify(KILL_ID, notification);					
 		}
 		Log.e("", "message: " + message);
 		// Handle the message here
