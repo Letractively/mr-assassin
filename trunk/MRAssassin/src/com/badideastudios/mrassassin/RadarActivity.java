@@ -1,6 +1,5 @@
 package com.badideastudios.mrassassin;
 
-import java.net.MalformedURLException;
 import java.util.List;
 
 import org.xml.sax.helpers.DefaultHandler;
@@ -11,9 +10,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.*;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 
 import android.location.Location;
@@ -60,6 +60,7 @@ public class RadarActivity extends Activity implements XMLDelegate
         super.onCreate(savedInstanceState);
         app = (AssassinApp) getApplication();
         act = this;
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         
         /** Set up C2DM */
         
@@ -202,8 +203,6 @@ public class RadarActivity extends Activity implements XMLDelegate
 				"</tag>" +
 				"</assassin>");
 		cut.execute();
-    	
-    	
     }
     
     public void warn()
@@ -220,7 +219,17 @@ public class RadarActivity extends Activity implements XMLDelegate
     	
     	Notification warningNote = new Notification(icon, tickerText, when);
     	warningNote.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+    	
+    	if( sharedPrefs.getBoolean("NoteSoundPref", true) == true)
+    		warningNote.sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.warning);
+    	if( sharedPrefs.getBoolean("NoteVibePref", true) == true)
+    		warningNote.defaults |= Notification.DEFAULT_VIBRATE;
     	noteManager.notify(warnID, warningNote);
+    }
+    
+    public void warn(View v)
+    {
+    	warn();
     }
     
     public void setGPSText(String text)    { GPStext.setText(text); }
