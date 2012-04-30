@@ -37,6 +37,14 @@ public class LoginActivity extends Activity
 			servForm.setText(savedServer);
 	}
 	
+	public void onDestroy()
+	{
+		super.onDestroy();
+		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
+		startService(unregIntent);
+	}
+	
 	public void login(View v)
 	{
 		// If all fields are not empty...
@@ -95,9 +103,6 @@ public class LoginActivity extends Activity
     	switch( item.getItemId() )
     	{
     	case R.id.exit:
-    		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
-    		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
-    		startService(unregIntent);
     		finish();
     		return true;
     	default:

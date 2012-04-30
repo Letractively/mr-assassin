@@ -171,6 +171,9 @@ public class RadarActivity extends Activity implements XMLDelegate
     {
     	super.onDestroy();
     	locManager.removeUpdates(GPSListener);
+		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
+		startService(unregIntent);
     }
     
     /** This function handles the callback from the Bluetooth enabler given to the user on startup. */
@@ -259,9 +262,6 @@ public class RadarActivity extends Activity implements XMLDelegate
     		startActivity(helpActivity);
     		return true;
     	case R.id.exit:
-    		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
-    		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
-    		startService(unregIntent);
     		finish();
     		return true;
     	default:
