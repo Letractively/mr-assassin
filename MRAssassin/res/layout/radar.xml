@@ -38,7 +38,8 @@
                 android:gravity="center_horizontal"
                 android:text="@string/status_text_1"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FF000000" />
+                android:textColor="#FF000000"
+                android:visibility= "gone" />"
 
             <Button
                 android:id="@+id/show_button"

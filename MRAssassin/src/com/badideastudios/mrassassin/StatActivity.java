@@ -51,17 +51,25 @@ public class StatActivity extends Activity implements XMLDelegate
 	  //  xmlp.execute();
         
         //TEST CODE: Remove when adding real data!
-        testGroup = new ArrayList<AssassinObj>();
+        /*testGroup = new ArrayList<AssassinObj>();
         testGroup.add( new AssassinObj("Altair", 10, 100, "Somebody", "00:00:00:00:00:00", 5000, 5, 10000) );
         testGroup.add( new AssassinObj("Travis Touchdown", 10, 100, "Somebody", "00:00:00:00:00:00", 2000, 2, 4000) );
         testGroup.add( new AssassinObj("Agent 47", 10, 100, "Somebody", "00:00:00:00:00:00", 4000, 4, 6000) );
         testGroup.add( new AssassinObj("Solid Snake", 10, 100, "Somebody", "00:00:00:00:00:00", 3000, 3, 5000) );
         testGroup.add( new AssassinObj("Sam Fisher", 10, 100, "Somebody", "00:00:00:00:00:00", 7000, 7, 9000) );
+        statsList.setAdapter( new MoneyListAdapter(this, testGroup) );
+		refreshPage();*/
 
         /** Fill all of the data views with our data */
         currentCategory = TOP_KILLERS;
-        statsList.setAdapter( new MoneyListAdapter(this, testGroup) );
-   //     refreshPage();
+	}
+	
+	public void onDestroy()
+	{
+		super.onDestroy();
+		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
+		startService(unregIntent);
 	}
 	
 	/** Handle left and right button presses*/
@@ -182,9 +190,6 @@ public class StatActivity extends Activity implements XMLDelegate
     		startActivity(helpActivity);
     		return true;
     	case R.id.exit:
-    		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
-    		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
-    		startService(unregIntent);
     		finish();
     		return true;
     	default:

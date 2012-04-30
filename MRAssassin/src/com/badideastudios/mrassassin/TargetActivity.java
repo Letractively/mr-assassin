@@ -83,6 +83,15 @@ public class TargetActivity extends Activity implements XMLDelegate
 	    currentBounty.setText( "Target Bounty: " + app.getTargetBounty() );
 		*/
 	}
+	
+	public void onDestroy()
+	{
+		super.onDestroy();
+		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
+		startService(unregIntent);
+	}
+	
 	public void parseComplete(DefaultHandler handler, Boolean result) {
 		dialog.hide();
 	//	AssassinHandler ah = (AssassinHandler)handler;
@@ -97,11 +106,10 @@ public class TargetActivity extends Activity implements XMLDelegate
 		app.setTargetBounty(mdh.targetAssassin.returnBounty());
 		app.setPlayerName(mdh.assassin.returnTag());
 */	    
-	    name.setText("Current Target: " + app.getTarget().returnTag());//getTargetName() );
-	    currentBounty.setText("Target Bounty: " + app.getTarget().returnBounty());//getTargetBounty());
-	    //name.setTag("Target Bounty: " + app.getTargetBounty());
-	    
-		// TODO Auto-generated method stub	
+	    name.setText("Current Target: " + app.getTarget().returnTag());
+	    currentKills.setText("Target Kills: " + app.getTarget().returnKills());
+	    currentBounty.setText("Target Bounty: " + app.getTarget().returnBounty());
+	    currentMoney.setText("Target Money: " + app.getTarget().returnMoney());
 	}
 	
 	public AssassinApp returnApp()
@@ -133,9 +141,6 @@ public class TargetActivity extends Activity implements XMLDelegate
     		startActivity(helpActivity);
     		return true;
     	case R.id.exit:
-    		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
-    		unregIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
-    		startService(unregIntent);
     		finish();
     		return true;
     	default:
