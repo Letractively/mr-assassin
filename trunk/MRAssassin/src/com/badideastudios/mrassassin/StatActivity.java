@@ -108,11 +108,12 @@ public class StatActivity extends Activity implements XMLDelegate
     private void refreshPage()
     {
         categoryText.setText( printTitle(currentCategory) );
+        LeaderboardHandler lh = new LeaderboardHandler();
         switch(currentCategory)
         {
     	default:
     	case TOP_KILLERS:
-    		LeaderboardHandler lh = new LeaderboardHandler();
+    	//	LeaderboardHandler lh = new LeaderboardHandler();
     		CreateUserTask cut1 = new CreateUserTask(this, this, lh);
     	    cut1.SetContent("5");
     	    cut1.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bykills");
@@ -123,8 +124,8 @@ public class StatActivity extends Activity implements XMLDelegate
     //        statsList.setAdapter( new KillListAdapter(this, testGroup) );
     		break;
     	case TOP_BOUNTY:
-    	    LeaderboardHandler lh2 = new LeaderboardHandler();
-    		CreateUserTask cut2 = new CreateUserTask(this, this, lh2);
+    	//    LeaderboardHandler lh2 = new LeaderboardHandler();
+    		CreateUserTask cut2 = new CreateUserTask(this, this, lh);
     	    cut2.SetContent("5");
     	    cut2.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bybounty");
     	    cut2.SetContentType("text/plain");
@@ -133,8 +134,8 @@ public class StatActivity extends Activity implements XMLDelegate
    //         statsList.setAdapter( new BountyListAdapter(this, testGroup) );          
     		break;
     	case TOP_EARNERS:
-    		LeaderboardHandler lh3 = new LeaderboardHandler();
-    		CreateUserTask cut3 = new CreateUserTask(this, this, lh3);
+    	//	LeaderboardHandler lh3 = new LeaderboardHandler();
+    		CreateUserTask cut3 = new CreateUserTask(this, this, lh);
     	    cut3.SetContent("5");
     	    cut3.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
     	    cut3.SetContentType("text/plain");

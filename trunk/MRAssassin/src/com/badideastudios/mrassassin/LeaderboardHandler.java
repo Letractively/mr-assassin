@@ -49,6 +49,8 @@ public class LeaderboardHandler extends DefaultHandler {
 			buffer = new StringBuffer();
 		else if(localName.equals("macaddr"))
 			buffer = new StringBuffer();
+		else if(localName.equals("kills"))
+			buffer = new StringBuffer();
 			//assassinName = atts.getValue("name");
 		// Called each time the parser starts a new element
 	}
@@ -79,9 +81,11 @@ public class LeaderboardHandler extends DefaultHandler {
 		else if(localName.equals("lat"))
 			assassin.setLat(Double.parseDouble(buffer.toString()));
 		else if(localName.equals("money"))
-			assassin.setBounty(Integer.parseInt(buffer.toString()));
+			assassin.setMoney(Integer.parseInt(buffer.toString()));
 		else if(localName.equals("macaddr"))
 			assassin.setMAC(buffer.toString());
+		else if(localName.equals("kills"))
+			assassin.setKills(Integer.parseInt(buffer.toString()));
 		else if(localName.equals("assassin"))
 			assassinList.add(assassin);
 		// Called when the parser ends an element		
