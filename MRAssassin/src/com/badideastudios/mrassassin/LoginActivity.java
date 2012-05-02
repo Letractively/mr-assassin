@@ -78,6 +78,21 @@ public class LoginActivity extends Activity
 		SharedPreferences.Editor settingEditor = settings.edit();
 		settingEditor.putString("Username", username);
 		settingEditor.putString("Server", server);
+		
+		// Send a command to the server to create the user
+		// If they already exist, the server ignores this command
+		String xmlString = new String();
+		xmlString = "<assassin>" +
+			"<tag>" +
+			username +
+			"</tag>" +
+			"</assassin>";
+		CreateUserTask cut = new CreateUserTask(this);
+		cut.SetAddress("http://mr-assassin.appspot.com/rest/add/assassin");
+		cut.SetContent(xmlString);
+		cut.SetContentType("application/xml");
+		cut.execute();
+		
 		settingEditor.commit();
 		
 		/* Perform a login at our server. */
