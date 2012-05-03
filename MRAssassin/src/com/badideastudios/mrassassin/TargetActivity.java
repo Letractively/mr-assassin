@@ -39,13 +39,24 @@ public class TargetActivity extends Activity implements XMLDelegate
 	    currentMoney =  (TextView)findViewById(com.badideastudios.mrassassin.R.id.targetMoney);
 	    
 	    // POST
-	   // CreateUserTask cut = new CreateUserTask(this);
-//	    cut.SetAddress("http://mr-assassin.appspot.com/rest/assassin");
-	   // cut.SetContent("5");
-	   // cut.SetAddress("http://mr-assassin.appspot.com/rest/get/leaderboard/bymoney");
-	    //cut.SetContentType("text/plain");
-	    //cut.SetInformation("sewellka");
+	    CreateUserTask cut = new CreateUserTask(this);
+	    //cut.SetAddress("http://mr-assassin.appspot.com/rest/assassin");
+	    //cut.SetContent("5");
+	    cut.SetAddress("http://mr-assassin.appspot.com/rest/update/assassin");
+	    cut.SetContentType("application/xml");
+	    String updateC2DM = "<assassin>" +
+	    	"<tag>" +
+	    	sharedPrefs.getString("Username", "") +
+	    	"</tag>" +
+	    	"<regID>" +
+	    	sharedPrefs.getString("registrationKey", "") +
+	    	"</regID>" +
+	    	"</assassin>";
 	    
+	    System.out.println(sharedPrefs.getString("registrationKey", ""));
+	    	
+	    cut.SetContent(updateC2DM);
+	    cut.execute();
 	    // GET
 	    /*
 	    sharedPrefs = getSharedPreferences("AssassinPrefs", 0);

@@ -324,7 +324,7 @@ public class RadarActivity extends Activity implements XMLDelegate
 	//			e.printStackTrace();
 	//		}
     		
-    		cut.SetAddress("http://mr-assassin.appspot.com/rest/update/position");
+    		cut.SetAddress("http://mr-assassin.appspot.com/rest/update/assassin");
     		cut.SetContentType("application/xml");
     		cut.setResponse(false);
     		String registrationKey = sharedPrefs.getString("registrationKey", "");
@@ -351,6 +351,7 @@ public class RadarActivity extends Activity implements XMLDelegate
     		cut.SetLon(location.getLongitude());
     		cut.SetName(app.getPlayer().returnTag());//appgetOurName());
     		cut.SetMAC(app.getPlayer().returnMACAddress());//app.getOurMAC());
+    		
     	/*	
     		CreateUserTask cut2 = new CreateUserTask(act);
     		cut2.SetAddress("http://mr-assassin.appspot.com/rest/get/target");
