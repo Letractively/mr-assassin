@@ -92,7 +92,13 @@ public class LoginActivity extends Activity
 		cut.SetContent(xmlString);
 		cut.SetContentType("application/xml");
 		cut.execute();
-		
+		/*
+		CreateUserTask cut2 = new CreateUserTask(this);
+		cut2.SetAddress("http://mr-assassin.appspot.com/rest/get/newtarget");
+		cut2.SetContent("");
+		cut2.SetContent("plain/text");
+		cut2.execute();
+		*/
 		settingEditor.commit();
 		
 		/* Perform a login at our server. */

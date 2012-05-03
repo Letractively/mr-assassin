@@ -1,5 +1,6 @@
 package com.badideastudios.mrassassin;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -67,6 +68,29 @@ public class ReceiverC2DM extends BroadcastReceiver {
 			Editor editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit();
 			editor.putString(REGISTRATION_KEY, registration);
 			editor.commit();
+			
+			// Attempts to update C2DM regID from the C2DM receiver
+			/*
+			Context context3 = context.getApplicationContext();
+			CreateUserTask cut = new CreateUserTask((Activity) context3);
+		    //cut.SetAddress("http://mr-assassin.appspot.com/rest/assassin");
+		    //cut.SetContent("5");
+		    cut.SetAddress("http://mr-assassin.appspot.com/rest/update/assassin");
+		    cut.SetContentType("application/xml");
+		    String updateC2DM = "<assassin>" +
+		    	"<tag>" +
+		    	sharedPrefsAssassin.getString("Username", "") +
+		    	"</tag>" +
+		    	"<regID>" +
+		    	sharedPrefsAssassin.getString("registrationKey", "") +
+		    	"</regID>" +
+		    	"</assassin>";
+		    
+		    System.out.println(sharedPrefsAssassin.getString("registrationKey", ""));
+		    	
+		    cut.SetContent(updateC2DM);
+		    cut.execute();
+		    */
 		}
 	}
 	
