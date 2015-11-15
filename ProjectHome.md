@@ -1,0 +1,1 @@
+A large-scale mixed reality game using Android as the client and google apps as the server.
